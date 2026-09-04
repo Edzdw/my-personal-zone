@@ -1,6 +1,8 @@
 import './App.css'
 
-import Navbar from './components/layout/Navbar'
+import SpaceBackground from './components/effects/SpaceBackground'
+
+// import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 
 import Hero from './components/sections/Hero'
@@ -14,7 +16,9 @@ import Contact from './components/sections/Contact'
 function App() {
   return (
     <main id="top" className="app">
-      <Navbar />
+      <SpaceBackground />
+
+      {/* <Navbar /> */}
 
       <Hero />
 

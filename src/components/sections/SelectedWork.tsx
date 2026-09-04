@@ -1,6 +1,9 @@
 import { projects } from '../../data/projects'
 
 function SelectedWork() {
+  // Nhân đôi project để tạo cảm giác chạy vô hạn
+  const carouselProjects = [...projects, ...projects]
+
   return (
     <section className="selected-work">
       <div className="selected-work__header">
@@ -12,37 +15,38 @@ function SelectedWork() {
         </span>
       </div>
 
-      <div className="project-list">
-        {projects.map((project) => (
-          <a
-            key={project.id}
-            href={project.url}
-            className="project-item"
-          >
-            <div className="project-item__top">
-              <span className="project-item__id">
-                {project.id}
-              </span>
+      <div className="project-carousel">
+        <div className="project-track">
+          {carouselProjects.map((project, index) => (
+            <a
+              key={`${project.id}-${index}`}
+              href={project.url}
+              className="project-card"
+            >
+              <div className="project-card__top">
+                <span>
+                  {project.id}
+                </span>
 
-              <span className="project-item__view">
-                VIEW
-                <span>↗</span>
-              </span>
-            </div>
+                <span className="project-card__view">
+                  VIEW <span>↗</span>
+                </span>
+              </div>
 
-            <div className="project-item__main">
-              <h2>{project.title}</h2>
+              <div className="project-card__content">
+                <h2>{project.title}</h2>
 
-              <p>{project.description}</p>
-            </div>
+                <p>{project.description}</p>
+              </div>
 
-            <div className="project-item__meta">
-              <span>{project.type}</span>
-              <span>{project.stack}</span>
-              <span>{project.year}</span>
-            </div>
-          </a>
-        ))}
+              <div className="project-card__meta">
+                <span>{project.type}</span>
+                <span>{project.stack}</span>
+                <span>{project.year}</span>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   )

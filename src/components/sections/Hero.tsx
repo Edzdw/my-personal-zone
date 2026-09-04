@@ -1,24 +1,54 @@
 function Hero() {
+  const handleExplore = () => {
+    document
+      .querySelector('.what-i-do')
+      ?.scrollIntoView({
+        behavior: 'smooth'
+      })
+  }
+
   return (
     <section className="hero">
-      <div className="hero__meta">
+      {/* <div className="hero__meta">
         <span>BASED IN</span>
         <span>HCMC / VN</span>
-      </div>
+      </div> */}
 
       <div className="hero__content">
-        <p className="hero__index">01 — PROFILE</p>
+        <div className="hero__content-inner">
+          <h1 className="hero__index">
+            01 — SOME THINGS ABOUT ME
+          </h1>
 
-        <h1>
-          I BUILD
-          <br />
-          THINGS.
-        </h1>
+          <div className="hero__intro">
+            <p>
+              I'm Tâm, a software engineer who loves building meaningful
+              automation and digital products that help people do better.
+            </p>
 
-        <div className="hero__context">
-          <span>SOFTWARE</span>
-          <span>STORIES</span>
-          <span>IDEAS</span>
+            <p>
+              More than just code, I love exploring design, storytelling,
+              and creative writing. I believe the best software is built
+              through a combination of technical skill and creative vision.
+            </p>
+          </div>
+
+          <button
+            className="hero__explore"
+            type="button"
+            onClick={handleExplore}
+          >
+            <span className="hero__explore-orbit orbit-1" />
+            <span className="hero__explore-orbit orbit-2" />
+
+            <span className="hero__explore-text">
+              EXPLORE
+            </span>
+
+            <span className="hero__explore-arrow">
+              ↓
+            </span>
+          </button>
         </div>
       </div>
 

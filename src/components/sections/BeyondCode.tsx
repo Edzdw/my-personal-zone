@@ -3,47 +3,52 @@ function BeyondCode() {
     <section className="beyond-code">
       <div className="beyond-code__header">
         <span className="section-index">03</span>
-        <span className="section-title">BEYOND THE CODE</span>
+        <span className="section-title">
+          BEYOND THE CODE
+        </span>
       </div>
 
-      <div className="beyond-code__content">
+      <div className="beyond-code__space">
+
+        <p className="beyond-code__fragment fragment-1">
+          SOME THINGS EXIST
+          <br />
+          BECAUSE I WAS CURIOUS.
+        </p>
+
+        <p className="beyond-code__fragment fragment-2">
+          SOME BECAUSE
+          <br />
+          I HAD AN IDEA.
+        </p>
+
+        <p className="beyond-code__fragment fragment-3">
+          SOME JUST BECAUSE
+          <br />
+          I WANTED TO SEE
+          <br />
+          WHAT WOULD HAPPEN.
+        </p>
+
+
         <div className="beyond-code__statement">
-          <p>
-            I SPEND A LOT
-            <br />
-            OF TIME BUILDING.
+          <p className="beyond-code__main">
+            <span className="typing-line typing-line--1">
+              I SPEND A LOT
+            </span>
+
+            <span className="typing-line typing-line--2">
+              OF TIME BUILDING.
+            </span>
           </p>
 
           <p className="beyond-code__contrast">
-            BUT NOT EVERYTHING
-            <br />
-            I BUILD HAS TO BE
-            <br />
-            USEFUL.
+            <span>BUT NOT EVERYTHING</span>
+            <span>I BUILD HAS TO BE</span>
+            <span>USEFUL.</span>
           </p>
         </div>
 
-        <div className="beyond-code__thought">
-          <p>
-            SOME THINGS EXIST
-            <br />
-            BECAUSE I WAS CURIOUS.
-          </p>
-
-          <p>
-            SOME BECAUSE
-            <br />
-            I HAD AN IDEA.
-          </p>
-
-          <p>
-            SOME JUST BECAUSE
-            <br />
-            I WANTED TO SEE
-            <br />
-            WHAT WOULD HAPPEN.
-          </p>
-        </div>
       </div>
 
       <div className="beyond-code__footer">

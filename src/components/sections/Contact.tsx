@@ -32,12 +32,12 @@ function Contact() {
           href="mailto:your@email.com"
           className="contact__email"
         >
-          <span>YOUR@EMAIL.COM</span>
+          <span>Edwarrd.dev@gmail.com</span>
           <span>↗</span>
         </a>
 
         <div className="contact__socials">
-          <a href="#">GITHUB ↗</a>
+          <a href="https://github.com/Edzdw">GITHUB ↗</a>
           <a href="#">LINKEDIN ↗</a>
         </div>
       </div>
