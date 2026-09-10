@@ -533,22 +533,24 @@ function EntrySequence({
 
     const renderSpaceStars = (
       now: number,
-      launchProgress: number
+      launchProgress: number,
+     
+      
     ) => {
       const launchEase = easeOutCubic(launchProgress)
       const speed = 0.8 + Math.pow(launchProgress, 2.15) * 175
 
       spaceStars.forEach((star) => {
         const previousZ = star.z
-        const currentPerspective = 900 / star.z
+        // const currentPerspective = 900 / star.z
 
-        const x =
-          centerX +
-          star.x * width * currentPerspective
+        // const x =
+        //   centerX +
+        //   star.x * width * currentPerspective
 
-        const y =
-          centerY +
-          star.y * height * currentPerspective
+        // const y =
+        //   centerY +
+        //   star.y * height * currentPerspective
 
         if (phaseRef.current === 'launching') {
           star.z -= speed
