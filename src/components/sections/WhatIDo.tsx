@@ -1,46 +1,105 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const buildText = 'I BUILD SOFTWARE.'
 
 function WhatIDo() {
+  const sectionRef = useRef<HTMLElement>(null)
+
   const [displayedText, setDisplayedText] = useState('')
   const [status, setStatus] = useState('INITIALIZING...')
   const [isComplete, setIsComplete] = useState(false)
 
   useEffect(() => {
-  let currentIndex = 0
+    const section = sectionRef.current
 
-  const startDelay = setTimeout(() => {
-    setStatus('BUILDING SYSTEM...')
+    if (!section) return
 
-    const typingInterval = setInterval(() => {
-      currentIndex += 1
+    let typingInterval: number | null = null
+    let completeTimeout: number | null = null
+    let hasStarted = false
 
-      setDisplayedText(
-        buildText.slice(0, currentIndex)
-      )
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || hasStarted) {
+          return
+        }
 
-      if (currentIndex >= buildText.length) {
-        clearInterval(typingInterval)
+        hasStarted = true
 
-        setTimeout(() => {
-          setStatus('BUILD COMPLETE')
-          setIsComplete(true)
-        }, 800)
+        setStatus('BUILDING SYSTEM...')
+
+        let currentIndex = 0
+
+        typingInterval = window.setInterval(() => {
+          currentIndex += 1
+
+          setDisplayedText(
+            buildText.slice(
+              0,
+              currentIndex
+            )
+          )
+
+          if (
+            currentIndex >=
+            buildText.length
+          ) {
+            if (typingInterval) {
+              clearInterval(
+                typingInterval
+              )
+            }
+
+            completeTimeout =
+              window.setTimeout(() => {
+                setStatus(
+                  'BUILD COMPLETE'
+                )
+
+                setIsComplete(true)
+              }, 800)
+          }
+        }, 130)
+
+        observer.disconnect()
+      },
+      {
+        threshold: 0.35,
       }
-    }, 130)
+    )
 
-    return () => clearInterval(typingInterval)
-  }, 1200)
+    observer.observe(section)
 
-  return () => clearTimeout(startDelay)
-}, [])
+    return () => {
+      observer.disconnect()
+
+      if (typingInterval) {
+        clearInterval(
+          typingInterval
+        )
+      }
+
+      if (completeTimeout) {
+        clearTimeout(
+          completeTimeout
+        )
+      }
+    }
+  }, [])
 
   return (
-    <section className="what-i-do">
+    <section
+      ref={sectionRef}
+      className="what-i-do"
+    >
       <div className="what-i-do__header">
-        <span className="section-index">01</span>
-        <span className="section-title">WHAT I DO</span>
+        <span className="section-index">
+          01
+        </span>
+
+        <span className="section-title">
+          WHAT I DO
+        </span>
       </div>
 
       <div className="what-i-do__content">
@@ -74,8 +133,16 @@ function WhatIDo() {
             </p>
 
             <div className="what-i-do__terminal-footer">
-              <span>PROCESS: CREATIVE_SYSTEM</span>
-              <span>STATUS: {isComplete ? 'ONLINE' : 'RUNNING'}</span>
+              <span>
+                PROCESS: CREATIVE_SYSTEM
+              </span>
+
+              <span>
+                STATUS:{' '}
+                {isComplete
+                  ? 'ONLINE'
+                  : 'RUNNING'}
+              </span>
             </div>
 
           </div>

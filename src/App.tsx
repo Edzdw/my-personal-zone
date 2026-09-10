@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react'
 import './App.css'
 
 import SpaceBackground from './components/effects/SpaceBackground'
+import EntrySequence from './components/effects/EntrySequence'
 
-// import Navbar from './components/layout/Navbar'
 import Footer from './components/layout/Footer'
 
 import Hero from './components/sections/Hero'
@@ -13,28 +14,59 @@ import Toolset from './components/sections/Toolset'
 import Currently from './components/sections/Currently'
 import Contact from './components/sections/Contact'
 
+import DownloadCV from './components/ui/DowloadCV'
+
 function App() {
+  const [entered, setEntered] = useState(() => {
+    return sessionStorage.getItem('portfolio-intro-seen') === 'true'
+  })
+
+  useEffect(() => {
+    const handleReplayIntro = () => {
+      sessionStorage.removeItem('portfolio-intro-seen')
+      setEntered(false)
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'instant',
+      })
+    }
+
+    window.addEventListener('replay-intro', handleReplayIntro)
+
+    return () => {
+      window.removeEventListener('replay-intro', handleReplayIntro)
+    }
+  }, [])
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem('portfolio-intro-seen', 'true')
+    setEntered(true)
+  }
+
   return (
-    <main id="top" className="app">
-      <SpaceBackground />
+    <main
+      id="top"
+      className={`app ${entered ? 'app--entered' : ''}`}
+    >
+      {!entered ? (
+        <EntrySequence onComplete={handleIntroComplete} />
+      ) : (
+        <>
+          <SpaceBackground />
+          {/* <Navbar /> */}
+          <DownloadCV />
 
-      {/* <Navbar /> */}
-
-      <Hero />
-
-      <WhatIDo />
-
-      <SelectedWork />
-
-      <BeyondCode />
-
-      <Toolset />
-
-      <Currently />
-
-      <Contact />
-
-      <Footer />
+          <Hero />
+          <WhatIDo />
+          <SelectedWork />
+          <BeyondCode />
+          <Toolset />
+          <Currently />
+          <Contact />
+          <Footer />
+        </>
+      )}
     </main>
   )
 }

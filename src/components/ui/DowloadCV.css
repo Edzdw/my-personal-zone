@@ -1,0 +1,105 @@
+.download-cv {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 20;
+  
+
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 11px 14px 11px 11px;
+
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+
+  background:
+    rgba(17, 17, 17, 0.78);
+
+  color: var(--color-text);
+  text-decoration: none;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background 0.3s ease;
+}
+
+.download-cv__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 22px;
+  height: 22px;
+
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+
+  color: var(--color-accent);
+
+  font-size: 13px;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.download-cv__label {
+  white-space: nowrap;
+}
+
+.download-cv:hover {
+  transform: translateX(-4px);
+
+  border-color:
+    var(--color-accent);
+
+  color:
+    var(--color-accent);
+
+  background:
+    rgba(216, 255, 62, 0.06);
+}
+
+.download-cv:hover
+.download-cv__icon {
+  transform:
+    translateY(2px);
+
+  background:
+    rgba(216, 255, 62, 0.08);
+}
+
+@media (max-width: 768px) {
+  .download-cv {
+    right: 18px;
+    bottom: 18px;
+
+    padding: 9px;
+
+    gap: 0;
+  }
+
+  .download-cv__label {
+    display: none;
+  }
+
+  .download-cv__icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+

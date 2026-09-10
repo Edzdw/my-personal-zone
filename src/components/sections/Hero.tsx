@@ -1,4 +1,16 @@
+import { useEffect, useState } from 'react'
+
 function Hero() {
+  const [revealed, setRevealed] = useState(false)
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setRevealed(true)
+    }, 180)
+
+    return () => window.clearTimeout(timer)
+  }, [])
+
   const handleExplore = () => {
     document
       .querySelector('.what-i-do')
@@ -8,12 +20,7 @@ function Hero() {
   }
 
   return (
-    <section className="hero">
-      {/* <div className="hero__meta">
-        <span>BASED IN</span>
-        <span>HCMC / VN</span>
-      </div> */}
-
+    <section className={`hero ${revealed ? 'hero--revealed' : ''}`}>
       <div className="hero__content">
         <div className="hero__content-inner">
           <h1 className="hero__index">
@@ -54,7 +61,6 @@ function Hero() {
 
       <div className="hero__footer">
         <span>↓ SCROLL TO EXPLORE</span>
-
         <span>2026</span>
       </div>
     </section>

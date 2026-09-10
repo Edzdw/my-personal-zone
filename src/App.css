@@ -67,9 +67,9 @@ button {
    background: var(--color-bg);
 }
 
-.app>*:not(.space-background) {
-   position: relative;
-   z-index: 1;
+.app > *:not(.space-background):not(.download-cv) {
+  position: relative;
+  z-index: 1;
 }
 
 /* =====================================================
@@ -326,6 +326,173 @@ button {
    letter-spacing: .08em;
 }
 
+/* HERO MORPH REVEAL */
+
+.hero__index,
+.hero__intro,
+.hero__explore,
+.hero__footer {
+  opacity: 0;
+}
+
+.hero__index {
+  transform:
+    translateY(-18px)
+    scale(0.96);
+  filter: blur(6px);
+}
+
+.hero__intro {
+  transform:
+    translateY(22px)
+    scale(0.985);
+  filter: blur(8px);
+}
+
+.hero__explore {
+  transform:
+    translateY(28px)
+    scale(0.72);
+  filter: blur(6px);
+}
+
+.hero__footer {
+  transform:
+    translateY(14px);
+  filter: blur(4px);
+}
+
+.hero--revealed .hero__index {
+  animation:
+    hero-index-materialize
+    0.9s
+    cubic-bezier(.16, 1, .3, 1)
+    forwards;
+}
+
+.hero--revealed .hero__intro {
+  animation:
+    hero-intro-materialize
+    1.1s
+    .12s
+    cubic-bezier(.16, 1, .3, 1)
+    forwards;
+}
+
+.hero--revealed .hero__explore {
+  animation:
+    hero-explore-materialize
+    1.15s
+    .32s
+    cubic-bezier(.16, 1, .3, 1)
+    forwards;
+}
+
+.hero--revealed .hero__footer {
+  animation:
+    hero-footer-materialize
+    .8s
+    .5s
+    cubic-bezier(.16, 1, .3, 1)
+    forwards;
+}
+
+@keyframes hero-index-materialize {
+  0% {
+    opacity: 0;
+    transform:
+      translateY(-18px)
+      scale(0.96);
+    filter: blur(6px);
+  }
+
+  55% {
+    opacity: 1;
+    transform:
+      translateY(3px)
+      scale(1.005);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-intro-materialize {
+  0% {
+    opacity: 0;
+    transform:
+      translateY(22px)
+      scale(0.985);
+    filter: blur(8px);
+  }
+
+  55% {
+    opacity: 1;
+    transform:
+      translateY(-2px)
+      scale(1.002);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-explore-materialize {
+  0% {
+    opacity: 0;
+    transform:
+      translateY(28px)
+      scale(0.72);
+    filter: blur(6px);
+  }
+
+  60% {
+    opacity: 1;
+    transform:
+      translateY(-3px)
+      scale(1.035);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-footer-materialize {
+  0% {
+    opacity: 0;
+    transform:
+      translateY(14px);
+    filter: blur(4px);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translateY(0);
+    filter: blur(0);
+  }
+}
+
+
+
 /* =====================================================
    06. WHAT I DO
    ===================================================== */
@@ -459,115 +626,626 @@ button {
    letter-spacing: .08em;
 }
 
-/* =====================================================
-   07. SELECTED WORK
-   ===================================================== */
+/* =========================================================
+   SELECTED WORK — PROJECT CONSTELLATION
+   ========================================================= */
 
 .selected-work {
-   overflow: hidden;
-   border-top: 1px solid var(--color-border);
+  position: relative;
+  padding: 32px 40px 0;
+  border-top: 1px solid var(--color-border);
 }
 
 .selected-work__header {
-   display: flex;
-   align-items: center;
-   gap: 16px;
-   padding: 32px 40px;
-   border-bottom: 1px solid var(--color-border);
-   color: var(--color-text-muted);
-   font-family: var(--font-mono);
-   font-size: 10px;
-   letter-spacing: .08em;
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 24px;
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
 }
 
 .selected-work__count {
-   margin-left: auto;
+  color: var(--color-text-secondary);
 }
 
-.project-carousel {
-   width: 100%;
-   overflow: hidden;
+
+/* ---------------------------------------------------------
+   CONSTELLATION FIELD
+   --------------------------------------------------------- */
+
+.project-constellation {
+  position: relative;
+  min-height: 720px;
+  margin-top: 24px;
+
+  overflow: hidden;
+
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.project-track {
-   display: flex;
-   width: max-content;
-   animation: project-scroll 35s linear infinite;
+
+/* ---------------------------------------------------------
+   CONNECTIONS
+   --------------------------------------------------------- */
+
+.project-constellation__connections {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-.project-card {
-   width: min(50vw, 760px);
-   min-height: 520px;
-   flex-shrink: 0;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
-   padding: 32px 40px;
-   border-right: 1px solid var(--color-border);
-   color: var(--color-text);
-   background: transparent;
-   transition: background-color .4s ease, color .4s ease;
+.constellation-line {
+  position: absolute;
+  display: block;
+
+  height: 1px;
+
+  transform-origin: left center;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(216, 255, 62, 0.08),
+      rgba(216, 255, 62, 0.28),
+      rgba(216, 255, 62, 0.08)
+    );
 }
 
-.project-card__top {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   color: var(--color-text-muted);
-   font-family: var(--font-mono);
-   font-size: 10px;
-   letter-spacing: .08em;
+
+/* Project 01 → 02 */
+
+.constellation-line--12 {
+  width: 48%;
+  left: 19%;
+  top: 30%;
+
+  transform: rotate(-12deg);
 }
 
-.project-card__view {
-   display: flex;
-   align-items: center;
-   gap: 8px;
-   transition: color .3s ease, transform .3s ease;
+
+/* Project 02 → 03 */
+
+.constellation-line--23 {
+  width: 45%;
+  left: 48%;
+  top: 44%;
+
+  transform: rotate(17deg);
 }
 
-.project-card__view span {
-   font-size: 14px;
+
+/* Project 03 → 01 */
+
+.constellation-line--31 {
+  width: 55%;
+  left: 22%;
+  top: 65%;
+
+  transform: rotate(-7deg);
 }
 
-.project-card__content {
-   display: flex;
-   flex-direction: column;
-   gap: 32px;
+
+/* ---------------------------------------------------------
+   RUNNING SIGNAL
+   --------------------------------------------------------- */
+
+.constellation-line i {
+  position: absolute;
+  top: 50%;
+  left: -8px;
+
+  width: 4px;
+  height: 4px;
+
+  transform: translateY(-50%);
+
+  border-radius: 50%;
+
+  background: var(--color-accent);
+
+  box-shadow:
+    0 0 6px rgba(216, 255, 62, 0.8),
+    0 0 16px rgba(216, 255, 62, 0.45);
+
+  animation:
+    constellation-signal 3.8s linear infinite;
 }
 
-.project-card h2 {
-   max-width: 90%;
-   color: var(--color-text);
-   font-family: var(--font-display);
-   font-size: clamp(52px, 6vw, 100px);
-   font-weight: 500;
-   line-height: .88;
-   letter-spacing: -.07em;
-   transition: color .3s ease;
+
+/*
+  Mỗi đường chạy khác timing → cảm giác signal
+  xuất hiện ngẫu nhiên thay vì 3 animation đồng bộ.
+*/
+
+.constellation-line--12 i {
+  animation-duration: 3.2s;
+  animation-delay: -1.7s;
 }
 
-.project-card__content p {
-   max-width: 420px;
-   color: var(--color-text-secondary);
-   font-size: 14px;
-   line-height: 1.6;
+.constellation-line--23 i {
+  animation-duration: 4.6s;
+  animation-delay: -3.1s;
 }
 
-.project-card__meta {
-   display: grid;
-   grid-template-columns: 1fr 1fr auto;
-   gap: 16px;
-   padding-top: 20px;
-   border-top: 1px solid var(--color-border);
-   color: var(--color-text-muted);
-   font-family: var(--font-mono);
-   font-size: 9px;
-   letter-spacing: .08em;
+.constellation-line--31 i {
+  animation-duration: 5.1s;
+  animation-delay: -0.8s;
 }
 
-.project-card__meta span:last-child {
-   text-align: right;
+@keyframes constellation-signal {
+  0% {
+    left: -8px;
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  100% {
+    left: calc(100% + 8px);
+    opacity: 0;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   PROJECTS
+   --------------------------------------------------------- */
+
+.project-constellation__projects {
+  position: absolute;
+  inset: 0;
+}
+
+
+/* Individual project */
+
+.constellation-project {
+  position: absolute;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+
+  color: var(--color-text);
+  text-decoration: none;
+
+  z-index: 2;
+}
+
+
+/* ---------------------------------------------------------
+   PROJECT POSITIONS
+   --------------------------------------------------------- */
+
+.constellation-project--1 {
+  left: 13%;
+  top: 22%;
+}
+
+.constellation-project--2 {
+  left: 57%;
+  top: 31%;
+}
+
+.constellation-project--3 {
+  left: 27%;
+  top: 67%;
+}
+
+
+/* ---------------------------------------------------------
+   NODE
+   --------------------------------------------------------- */
+
+.constellation-project__node {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  width: 16px;
+  height: 16px;
+
+  margin-top: 2px;
+
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.constellation-project__core {
+  position: absolute;
+
+  width: 5px;
+  height: 5px;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: var(--color-text-muted);
+
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* ---------------------------------------------------------
+   INFO
+   --------------------------------------------------------- */
+
+.constellation-project__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.constellation-project__id {
+  margin-bottom: 4px;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+
+  color: var(--color-accent);
+}
+
+.constellation-project__title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+}
+
+.constellation-project__meta,
+.constellation-project__year,
+.constellation-project__view {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.constellation-project__meta {
+  color: var(--color-text-muted);
+}
+
+.constellation-project__year {
+  margin-top: 8px;
+  color: var(--color-text-secondary);
+}
+
+.constellation-project__view {
+  margin-top: 18px;
+  color: var(--color-text-secondary);
+
+  transition: color 0.3s ease;
+}
+
+
+/* ---------------------------------------------------------
+   HOVER
+   --------------------------------------------------------- */
+
+.constellation-project:hover .constellation-project__node {
+  border-color: var(--color-accent);
+  transform: scale(1.2);
+}
+
+.constellation-project:hover .constellation-project__core {
+  background: var(--color-accent);
+
+  box-shadow:
+    0 0 8px rgba(216, 255, 62, 0.9),
+    0 0 20px rgba(216, 255, 62, 0.5);
+}
+
+.constellation-project:hover .constellation-project__view {
+  color: var(--color-accent);
+}
+
+
+/* ---------------------------------------------------------
+   FIELD LABEL
+   --------------------------------------------------------- */
+
+.project-constellation__coordinates {
+  position: absolute;
+
+  right: 24px;
+  bottom: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+
+  color: var(--color-text-muted);
+}
+
+
+/* ---------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------- */
+
+.project-constellation__footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  padding: 16px 0 24px;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+
+  color: var(--color-text-muted);
+}
+
+.project-constellation__footer span:nth-child(2) {
+  text-align: center;
+}
+
+.project-constellation__footer span:last-child {
+  text-align: right;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .selected-work {
+    padding: 24px 20px 0;
+  }
+
+  .selected-work__header {
+    grid-template-columns: 40px 1fr auto;
+    gap: 12px;
+  }
+
+  .project-constellation {
+    min-height: 760px;
+  }
+
+  /*
+    Mobile không cố giữ constellation desktop.
+    Nó trở thành một vertical field.
+  */
+
+  .constellation-project--1 {
+    left: 8%;
+    top: 13%;
+  }
+
+  .constellation-project--2 {
+    left: 42%;
+    top: 40%;
+  }
+
+  .constellation-project--3 {
+    left: 14%;
+    top: 68%;
+  }
+
+  .constellation-project__title {
+    font-size: clamp(30px, 9vw, 44px);
+  }
+
+  /*
+    Giảm độ phức tạp của connection trên mobile.
+  */
+
+  .constellation-line--12 {
+    width: 55%;
+    left: 18%;
+    top: 29%;
+    transform: rotate(18deg);
+  }
+
+  .constellation-line--23 {
+    width: 42%;
+    left: 48%;
+    top: 52%;
+    transform: rotate(105deg);
+  }
+
+  .constellation-line--31 {
+    width: 48%;
+    left: 20%;
+    top: 76%;
+    transform: rotate(-18deg);
+  }
+
+  .project-constellation__coordinates {
+    right: 12px;
+    bottom: 16px;
+  }
+
+  .project-constellation__footer {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .project-constellation__footer span,
+  .project-constellation__footer span:nth-child(2),
+  .project-constellation__footer span:last-child {
+    text-align: left;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------- */
+
+.project-orbit__footer {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 24px 40px;
+
+  border-top: 1px solid var(--color-border);
+
+  color: var(--color-text-muted);
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+
+/* ---------------------------------------------------------
+   MOTION
+   --------------------------------------------------------- */
+
+@keyframes project-orbit-spin {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes project-orbit-spin-reverse {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: -360deg;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .selected-work__header {
+    padding: 24px 20px;
+  }
+
+  .project-orbit {
+    min-height: 760px;
+
+    padding: 40px 20px;
+  }
+
+  .project-orbit__system {
+    width: 100%;
+    max-width: 620px;
+
+    aspect-ratio: auto;
+    height: 660px;
+  }
+
+  /* Keep the system, but make it more vertical */
+
+  .project-orbit__ring--1 {
+    width: 230px;
+    height: 230px;
+  }
+
+  .project-orbit__ring--2 {
+    width: 430px;
+    height: 430px;
+  }
+
+  .project-orbit__ring--3 {
+    width: 570px;
+    height: 570px;
+  }
+
+  .project-orbit__center {
+    width: 110px;
+    height: 110px;
+  }
+
+  .project-orbit__center-label {
+    font-size: 8px;
+  }
+
+  .project-orbit__project--1 {
+    top: 8%;
+    left: 50%;
+  }
+
+  .project-orbit__project--2 {
+    right: 0;
+    bottom: 27%;
+  }
+
+  .project-orbit__project--3 {
+    left: 0;
+    bottom: 12%;
+  }
+
+  .project-orbit__project-info {
+    min-width: 130px;
+    padding: 12px 14px;
+  }
+
+  .project-orbit__project-title {
+    font-size: 17px;
+  }
+
+  .project-orbit__project-meta {
+    font-size: 7px;
+  }
+
+  .project-orbit__footer {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 12px 28px;
+
+    padding: 20px;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .project-orbit__ring {
+    animation: none;
+  }
+
+  .project-orbit__project,
+  .project-orbit__node,
+  .project-orbit__project-info {
+    transition: none;
+  }
 }
 
 /* =====================================================
@@ -1381,6 +2059,28 @@ button {
    letter-spacing: .08em;
 }
 
+.footer__replay {
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  color: inherit;
+
+  font: inherit;
+  letter-spacing: inherit;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.footer__replay:hover {
+  color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
 /* =====================================================
    13. DESKTOP INTERACTIONS
    ===================================================== */
@@ -2068,10 +2768,13 @@ button {
    }
 
    .footer {
-      flex-wrap: wrap;
-      gap: 12px;
-      padding: 20px;
-   }
+    flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+
+  .footer__replay {
+    order: 3;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
