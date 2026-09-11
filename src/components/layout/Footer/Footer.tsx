@@ -1,3 +1,5 @@
+import './Footer.css'
+
 function Footer() {
   const handleReplayIntro = () => {
     window.dispatchEvent(new Event('replay-intro'))

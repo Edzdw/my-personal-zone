@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import './WhatIDo.css'
 
 const buildText = 'I BUILD SOFTWARE.'
 

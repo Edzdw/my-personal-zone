@@ -1,4 +1,5 @@
-import { stack } from '../../data/stack'
+import { stack } from '../../../data/stack'
+import './Toolset.css'
 
 function Toolset() {
   return (

@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-import SpaceBackground from './components/effects/SpaceBackground'
-import EntrySequence from './components/effects/EntrySequence'
+import SpaceBackground from './components/effects/SpaceBackground/SpaceBackground'
+import EntrySequence from './components/effects/EntrySequence/EntrySequence'
 
-import Footer from './components/layout/Footer'
+import Footer from './components/layout/Footer/Footer'
 
-import Hero from './components/sections/Hero'
-import WhatIDo from './components/sections/WhatIDo'
-import SelectedWork from './components/sections/SelectedWork'
-import BeyondCode from './components/sections/BeyondCode'
-import Toolset from './components/sections/Toolset'
-import Currently from './components/sections/Currently'
-import Contact from './components/sections/Contact'
+import Hero from './components/sections/Hero/Hero'
+import WhatIDo from './components/sections/WhatIDo/WhatIDo'
+import SelectedWork from './components/sections/SelectedWork/SelectedWork'
+import BeyondCode from './components/sections/BeyondCode/BeyondCode'
+import Toolset from './components/sections/Toolset/Toolset'
+import Currently from './components/sections/Currently/Currently'
+import Contact from './components/sections/Contact/Contact'
 
 import DownloadCV from './components/ui/DowloadCV'
 

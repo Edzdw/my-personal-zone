@@ -1,0 +1,219 @@
+.contact {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-top: 1px solid var(--color-border);
+}
+
+.contact::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(70vw, 1000px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 255, 62, 0.08), rgba(70, 100, 180, 0.035) 30%, transparent 65%);
+  content: '';
+  filter: blur(30px);
+  opacity: 0.8;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.contact::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(55vw, 750px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(216, 255, 62, 0.06);
+  border-radius: 50%;
+  content: '';
+  box-shadow: 0 0 0 80px rgba(216, 255, 62, 0.025), 0 0 0 180px rgba(70, 100, 180, 0.02);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: contact-signal 8s ease-in-out infinite;
+}
+
+.contact__header,
+.contact__content,
+.contact__actions {
+  position: relative;
+  z-index: 2;
+}
+
+.contact__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 40px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.contact__header > div {
+  display: flex;
+  gap: 16px;
+}
+
+.contact__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact__status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: contact-status-pulse 2.5s ease-in-out infinite;
+}
+
+.contact__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 40px;
+}
+
+.contact__eyebrow {
+  margin-bottom: 32px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.contact__content h2 {
+  max-width: 1200px;
+  color: var(--color-text);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(64px, 10vw, 180px);
+  font-weight: 500;
+  line-height: 0.82;
+  letter-spacing: -0.08em;
+}
+
+.contact__actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 32px 40px;
+  border-top: 1px solid var(--color-border);
+}
+
+.contact__email {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 48px);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.contact__email::after {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--color-accent);
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.contact__email span:last-child {
+  color: var(--color-accent);
+}
+
+.contact__socials {
+  display: flex;
+  gap: 24px;
+}
+
+.contact__socials a {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+@keyframes contact-signal {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.7;
+  }
+}
+
+@keyframes contact-status-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.7);
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) {
+  .contact__email:hover,
+  .contact__socials a:hover {
+    color: var(--color-accent);
+  }
+
+  .contact__email:hover {
+    transform: translateX(8px);
+  }
+
+  .contact__email:hover::after {
+    transform: scaleX(1);
+  }
+
+  .contact__socials a:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 767px) {
+  .contact__content {
+    padding: 100px 20px;
+  }
+
+  .contact__content h2 {
+    font-size: clamp(56px, 16vw, 100px);
+  }
+
+  .contact__actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 28px 20px;
+  }
+
+  .contact__socials {
+    flex-wrap: wrap;
+  }
+
+  .contact::after {
+    width: 90vw;
+  }
+}

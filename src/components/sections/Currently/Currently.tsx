@@ -1,4 +1,5 @@
-import { currently } from '../../data/currently'
+import { currently } from '../../../data/currently'
+import './Currently.css'
 
 function Currently() {
   return (

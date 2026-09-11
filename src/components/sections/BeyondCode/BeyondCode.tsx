@@ -1,3 +1,5 @@
+import './BeyondCode.css'
+
 function BeyondCode() {
   return (
     <section className="beyond-code">

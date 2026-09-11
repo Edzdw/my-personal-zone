@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './Hero.css'
 
 function Hero() {
   const [revealed, setRevealed] = useState(false)

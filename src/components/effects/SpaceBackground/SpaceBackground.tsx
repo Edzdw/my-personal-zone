@@ -1,3 +1,5 @@
+import './SpaceBackground.css'
+
 function SpaceBackground() {
   return (
     <div className="space-background" aria-hidden="true">
