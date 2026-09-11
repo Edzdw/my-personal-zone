@@ -31,6 +31,7 @@ type TextParticle = {
 
   angle: number
   distance: number
+  behavior: 'core' | 'burst'
 }
 
 type SpaceStar = {
@@ -440,8 +441,7 @@ function EntrySequence({
             y,
 
             size:
-              Math.random() >
-                0.84
+              Math.random() > 0.84
                 ? 1.8
                 : 1,
 
@@ -449,12 +449,16 @@ function EntrySequence({
               alpha / 255,
 
             delay:
-              Math.random() *
-              0.55,
+              Math.random() * 0.55,
 
             angle,
 
             distance,
+
+            behavior:
+              Math.random() < 0.28
+                ? 'core'
+                : 'burst',
           })
         }
       }
@@ -533,9 +537,7 @@ function EntrySequence({
 
     const renderSpaceStars = (
       now: number,
-      launchProgress: number,
-     
-      
+      launchProgress: number
     ) => {
       const launchEase = easeOutCubic(launchProgress)
       const speed = 0.8 + Math.pow(launchProgress, 2.15) * 175
@@ -573,9 +575,9 @@ function EntrySequence({
           0.78 +
           Math.sin(
             now * 0.001 * star.twinkleSpeed +
-              star.twinkle
+            star.twinkle
           ) *
-            0.22
+          0.22
 
         const depthFactor = Math.min(1.45, 2800 / Math.max(star.z, 280))
         const size = Math.max(0.3, star.size * (0.72 + depthFactor * 0.38))
@@ -674,42 +676,37 @@ function EntrySequence({
               3
             )
 
-          particle.x =
-            particle.originX +
-            (particle.targetX -
-              particle.originX) *
-            eased
+          if (particle.behavior === 'core') {
+            // A portion of the lettering becomes the core rather than
+            // simply flying away. This gives the next scene a visual cause.
+            const pull = Math.min(1, eased * 1.08)
+            particle.x =
+              particle.originX +
+              (centerX - particle.originX) * pull
+            particle.y =
+              particle.originY +
+              (centerY - particle.originY) * pull
+          } else {
+            particle.x =
+              particle.originX +
+              (particle.targetX -
+                particle.originX) *
+              eased
 
-          particle.y =
-            particle.originY +
-            (particle.targetY -
-              particle.originY) *
-            eased
+            particle.y =
+              particle.originY +
+              (particle.targetY -
+                particle.originY) *
+              eased
 
-          /*
-           * Slight secondary drift.
-           */
+            const drift =
+              Math.sin(localProgress * Math.PI) * 10
 
-          const drift =
-            Math.sin(
-              localProgress *
-              Math.PI
-            ) *
-            10
-
-          particle.x +=
-            Math.cos(
-              particle.angle +
-              Math.PI / 2
-            ) *
-            drift
-
-          particle.y +=
-            Math.sin(
-              particle.angle +
-              Math.PI / 2
-            ) *
-            drift
+            particle.x +=
+              Math.cos(particle.angle + Math.PI / 2) * drift
+            particle.y +=
+              Math.sin(particle.angle + Math.PI / 2) * drift
+          }
 
           /*
            * Fade gradually,
@@ -718,8 +715,9 @@ function EntrySequence({
 
           const alpha =
             particle.alpha *
-            (1 -
-              eased * 0.9)
+            (particle.behavior === 'core'
+              ? Math.max(0, 1 - eased * 1.35)
+              : 1 - eased * 0.9)
 
           if (alpha <= 0.01) {
             return
@@ -850,6 +848,22 @@ function EntrySequence({
 
       /*
        * -----------------------------------------
+       * COUNTDOWN
+       * -----------------------------------------
+       */
+
+      if (currentPhase === 'countdown') {
+        // const countdownProgress = Math.min(1, phaseElapsed / 3000)
+        const anticipation =
+          countdown === 1
+            ? Math.min(1, Math.max(0, (phaseElapsed - 2000) / 1000))
+            : Math.min(1, phaseElapsed / 3000)
+
+        renderSpaceStars(now, anticipation * 0.32)
+      }
+
+      /*
+       * -----------------------------------------
        * LAUNCH
        * -----------------------------------------
        */
@@ -919,7 +933,7 @@ function EntrySequence({
 
   return (
     <section
-      className={`entry-sequence entry-sequence--${phase}`}
+      className={`entry-sequence entry-sequence--${phase} ${phase === 'countdown' ? `entry-sequence--countdown-${countdown}` : ''}`}
       aria-label="Portfolio introduction"
     >
       <div

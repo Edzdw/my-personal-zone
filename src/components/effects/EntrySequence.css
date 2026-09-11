@@ -422,8 +422,23 @@
 
 .entry-sequence--dissolve .entry-sequence__system {
     opacity: 0;
-    transform:
-        translate(-50%, -50%) scale(0.7);
+    transform: translate(-50%, -50%) scale(0.7);
+    animation: system-emerge 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes system-emerge {
+    0%, 52% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7);
+    }
+    76% {
+        opacity: 0.58;
+        transform: translate(-50%, -50%) scale(0.88);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 /* ================================================
@@ -458,11 +473,67 @@
 
 .entry-sequence--ready .entry-sequence__control {
     opacity: 1;
-
-    transform:
-        translate(-50%, -50%) scale(1);
-
+    transform: translate(-50%, -50%) scale(1);
     pointer-events: auto;
+}
+
+/* The button hands its visual weight to the countdown instead of popping away. */
+.entry-sequence--countdown .entry-sequence__control {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.72);
+    filter: blur(4px);
+}
+
+.entry-sequence--countdown .entry-sequence__hint {
+    opacity: 0;
+    transform: translateX(-50%) translateY(6px);
+}
+
+.entry-sequence--countdown .entry-sequence__system {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.entry-sequence--countdown .entry-sequence__orbit {
+    animation: orbit-countdown 4.5s linear infinite;
+}
+
+.entry-sequence--countdown-2 .entry-sequence__orbit {
+    animation-duration: 3.2s;
+}
+
+.entry-sequence--countdown-1 .entry-sequence__orbit {
+    animation-duration: 1.15s;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.entry-sequence--countdown-1 .entry-sequence__core {
+    animation: core-anticipate 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.entry-sequence--countdown-1 .entry-sequence__grid {
+    opacity: 0.5;
+    transform: scale(1.28);
+}
+
+@keyframes orbit-countdown {
+    from { rotate: 0deg; }
+    to { rotate: 360deg; }
+}
+
+@keyframes core-anticipate {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 0 0 0 0 rgba(216, 255, 62, 0), 0 0 18px rgba(216, 255, 62, 0.28);
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(1.55);
+        box-shadow: 0 0 0 18px rgba(216, 255, 62, 0.035), 0 0 55px rgba(216, 255, 62, 0.24);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.55);
+        box-shadow: 0 0 0 34px rgba(216, 255, 62, 0.015), 0 0 85px rgba(216, 255, 62, 0.12);
+    }
 }
 
 /* ================================================
@@ -479,13 +550,31 @@
 
 .entry-sequence--launching .entry-sequence__system {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    animation: system-collapse 3.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
-    transform:
-        translate(-50%, -50%) scale(1);
-
-    transition:
-        opacity 0.45s ease,
-        transform 1.6s cubic-bezier(0.08, 0.7, 0.12, 1);
+@keyframes system-collapse {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    22% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.92);
+    }
+    58% {
+        opacity: 0.78;
+        transform: translate(-50%, -50%) scale(0.48);
+    }
+    82% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.08);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
 }
 
 .entry-sequence--launching .entry-sequence__system .entry-sequence__core {
@@ -497,15 +586,33 @@
 }
 
 .entry-sequence--launching .entry-sequence__orbit {
-    animation: none;
+    animation: orbit-launch 0.72s linear infinite;
     opacity: 0;
+    animation-play-state: running;
 }
 
 
 .entry-sequence--launching .entry-sequence__grid {
     opacity: 0;
-
     transform: scale(3);
+    animation: grid-launch 3.25s cubic-bezier(0.08, 0.7, 0.12, 1) forwards;
+}
+
+@keyframes grid-launch {
+    0% { opacity: 0.35; transform: scale(1); }
+    28% { opacity: 0.38; transform: scale(1.15); }
+    70% { opacity: 0.14; transform: scale(2.1); }
+    100% { opacity: 0; transform: scale(4.8); }
+}
+
+
+.entry-sequence--countdown-1 .entry-sequence__stars {
+    animation: stars-prewarp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes stars-prewarp {
+    0% { transform: scale(1); opacity: 0.45; }
+    100% { transform: scale(1.22); opacity: 0.62; }
 }
 
 .entry-sequence--launching .entry-sequence__stars {
@@ -779,20 +886,20 @@
     opacity: 0;
   }
 
-  78% {
+  82% {
     opacity: 0;
   }
 
-  88% {
-    opacity: 0.45;
+  90% {
+    opacity: 0.35;
   }
 
-  92% {
+  94% {
     opacity: 1;
   }
 
-  96% {
-    opacity: 0.35;
+  97% {
+    opacity: 0.25;
   }
 
   100% {
