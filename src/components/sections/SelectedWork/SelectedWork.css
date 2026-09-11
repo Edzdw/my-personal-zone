@@ -266,62 +266,102 @@
   }
 
   .project-constellation {
-    min-height: 760px;
+    min-height: auto;
+    padding: 28px 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
   }
 
-  .constellation-project--1 {
-    left: 8%;
-    top: 13%;
+  .project-constellation__connections {
+    display: none;
   }
 
-  .constellation-project--2 {
-    left: 42%;
-    top: 40%;
+  .project-constellation__projects {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
   }
 
+  .constellation-project {
+    position: relative;
+    left: auto;
+    top: auto;
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
+    gap: 16px;
+    width: min(100%, 430px);
+    margin: 0 auto;
+  }
+
+  .constellation-project::before {
+    position: absolute;
+    left: 7px;
+    top: 28px;
+    bottom: -20px;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(216, 255, 62, 0.18), rgba(216, 255, 62, 0.42), rgba(216, 255, 62, 0.18));
+    content: '';
+  }
+
+  .constellation-project:last-child::before {
+    display: none;
+  }
+
+  .constellation-project--1,
+  .constellation-project--2,
   .constellation-project--3 {
-    left: 14%;
-    top: 68%;
+    left: auto;
+    top: auto;
+  }
+
+  .constellation-project__node {
+    width: 14px;
+    height: 14px;
+    margin-top: 6px;
   }
 
   .constellation-project__title {
-    font-size: clamp(30px, 9vw, 44px);
-  }
-
-  .constellation-line--12 {
-    width: 55%;
-    left: 18%;
-    top: 29%;
-    transform: rotate(18deg);
-  }
-
-  .constellation-line--23 {
-    width: 42%;
-    left: 48%;
-    top: 52%;
-    transform: rotate(105deg);
-  }
-
-  .constellation-line--31 {
-    width: 48%;
-    left: 20%;
-    top: 76%;
-    transform: rotate(-18deg);
+    font-size: clamp(28px, 9vw, 42px);
   }
 
   .project-constellation__coordinates {
-    right: 12px;
-    bottom: 16px;
+    position: static;
+    align-items: flex-start;
+    padding-left: 24px;
   }
 
   .project-constellation__footer {
     grid-template-columns: 1fr;
     gap: 8px;
+    padding-bottom: 20px;
   }
 
   .project-constellation__footer span,
   .project-constellation__footer span:nth-child(2),
   .project-constellation__footer span:last-child {
     text-align: left;
+  }
+}
+
+@media (max-width: 374px) {
+  .selected-work__header {
+    grid-template-columns: 32px 1fr auto;
+  }
+
+  .constellation-project {
+    gap: 12px;
+  }
+
+  .constellation-project__title {
+    font-size: clamp(24px, 8vw, 32px);
+  }
+
+  .constellation-project__meta,
+  .constellation-project__year,
+  .constellation-project__view {
+    font-size: 8px;
   }
 }

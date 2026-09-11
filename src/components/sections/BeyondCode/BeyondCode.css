@@ -212,32 +212,34 @@
 @media (max-width: 767px) {
   .beyond-code {
     min-height: auto;
-    padding: 24px 20px 40px;
+    padding: 24px 20px 32px;
   }
 
   .beyond-code__space {
-    min-height: 700px;
+    min-height: 560px;
     align-items: flex-start;
-    padding-top: 180px;
+    padding-top: 110px;
   }
 
   .beyond-code__statement {
+    max-width: 100%;
     align-items: flex-start;
     text-align: left;
   }
 
   .beyond-code__main {
-    font-size: clamp(56px, 16vw, 100px);
+    font-size: clamp(50px, 10vw, 96px);
   }
 
   .beyond-code__contrast {
     align-items: flex-start;
-    margin-top: 40px;
-    font-size: clamp(26px, 7vw, 42px);
+    margin-top: 28px;
+    font-size: clamp(24px, 7vw, 42px);
   }
 
   .beyond-code__fragment {
-    font-size: 9px;
+    max-width: 130px;
+    font-size: 8px;
   }
 
   .fragment-1 {
@@ -252,13 +254,28 @@
 
   .fragment-3 {
     right: 0;
-    bottom: 8%;
-    max-width: 200px;
+    bottom: 12%;
+    max-width: 150px;
   }
 
   .beyond-code__footer {
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 16px 28px;
+    gap: 12px 20px;
+  }
+}
+
+@media (max-width: 374px) {
+  .beyond-code__space {
+    min-height: 500px;
+    padding-top: 90px;
+  }
+
+  .beyond-code__main {
+    font-size: clamp(42px, 15vw, 70px);
+  }
+
+  .beyond-code__fragment {
+    max-width: 110px;
   }
 }

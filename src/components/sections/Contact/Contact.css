@@ -194,26 +194,55 @@
 }
 
 @media (max-width: 767px) {
+  .contact__header {
+    padding: 24px 20px;
+  }
+
   .contact__content {
-    padding: 100px 20px;
+    padding: 72px 20px 40px;
   }
 
   .contact__content h2 {
-    font-size: clamp(56px, 16vw, 100px);
+    font-size: clamp(46px, 15vw, 90px);
+    line-height: 0.9;
   }
 
   .contact__actions {
     flex-direction: column;
     align-items: flex-start;
-    gap: 40px;
+    gap: 30px;
     padding: 28px 20px;
+  }
+
+  .contact__email {
+    gap: 10px;
+    font-size: clamp(20px, 7vw, 36px);
   }
 
   .contact__socials {
     flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+
+  .contact__socials a {
+    font-size: 9px;
   }
 
   .contact::after {
-    width: 90vw;
+    width: 88vw;
+  }
+}
+
+@media (max-width: 374px) {
+  .contact__content h2 {
+    font-size: clamp(40px, 14vw, 72px);
+  }
+
+  .contact__actions {
+    gap: 24px;
+  }
+
+  .contact__socials {
+    gap: 10px 12px;
   }
 }

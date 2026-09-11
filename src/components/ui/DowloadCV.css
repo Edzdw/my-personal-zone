@@ -103,3 +103,10 @@
   }
 }
 
+@media (max-width: 374px) {
+  .download-cv {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+

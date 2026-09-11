@@ -285,7 +285,7 @@
   }
 
   .currently__feed {
-    padding: 80px 20px;
+    padding: 80px 20px 52px;
   }
 
   .currently__feed-line {
@@ -326,6 +326,15 @@
     margin-left: 0;
   }
 
+  .currently-item__content h3 {
+    font-size: clamp(28px, 8vw, 42px);
+  }
+
+  .currently-item__content > p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
   .currently-item__meta {
     flex-direction: column;
     align-items: flex-start;
@@ -333,5 +342,22 @@
 
   .currently__footer {
     padding: 24px 20px;
+  }
+}
+
+@media (max-width: 374px) {
+  .currently__hero p {
+    font-size: clamp(40px, 13vw, 76px);
+  }
+
+  .currently-item,
+  .currently-item--left,
+  .currently-item--right {
+    padding-left: 38px;
+  }
+
+  .currently-item__top {
+    gap: 10px;
+    font-size: 9px;
   }
 }
