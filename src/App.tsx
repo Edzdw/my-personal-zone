@@ -14,9 +14,11 @@ import Toolset from './components/sections/Toolset/Toolset'
 import Currently from './components/sections/Currently/Currently'
 import Contact from './components/sections/Contact/Contact'
 
-import DownloadCV from './components/ui/DowloadCV'
+import ControlNode from './components/ui/ControlNode'
 
 function App() {
+
+  const [heroReveal, setHeroReveal] = useState(false)
   const [entered, setEntered] = useState(() => {
     return sessionStorage.getItem('portfolio-intro-seen') === 'true'
   })
@@ -24,6 +26,7 @@ function App() {
   useEffect(() => {
     const handleReplayIntro = () => {
       sessionStorage.removeItem('portfolio-intro-seen')
+      setHeroReveal(false)
       setEntered(false)
 
       window.scrollTo({
@@ -41,6 +44,7 @@ function App() {
 
   const handleIntroComplete = () => {
     sessionStorage.setItem('portfolio-intro-seen', 'true')
+    setHeroReveal(true)
     setEntered(true)
   }
 
@@ -55,9 +59,9 @@ function App() {
         <>
           <SpaceBackground />
           {/* <Navbar /> */}
-          <DownloadCV />
+          <ControlNode />
 
-          <Hero />
+          <Hero reveal={heroReveal} />
           <WhatIDo />
           <SelectedWork />
           <BeyondCode />

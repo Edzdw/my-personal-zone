@@ -1,0 +1,494 @@
+/* =========================================================
+   CONTROL NODE
+   Vertical Deploy
+   ========================================================= */
+
+.control-node {
+  position: fixed;
+
+  right: 28px;
+  bottom: 28px;
+
+  width: 190px;
+  height: 230px;
+
+  z-index: 2000;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   CLICK OUTSIDE
+   ========================================================= */
+
+.control-node__overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 0;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: default;
+
+  pointer-events: auto;
+}
+
+/* =========================================================
+   DEPLOY SYSTEM
+   ========================================================= */
+
+.control-node__deploy {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   CHAMBERS
+   ========================================================= */
+
+.control-node__chamber {
+  position: absolute;
+
+  right: 0;
+
+  width: 170px;
+  height: 36px;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform:
+    translateY(28px)
+    scale(0.92);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =========================================================
+   POSITIONS
+   ========================================================= */
+
+.control-node__chamber--replay {
+  bottom: 174px;
+}
+
+.control-node__chamber--download {
+  bottom: 126px;
+}
+
+.control-node__chamber--top {
+  bottom: 78px;
+}
+
+/* =========================================================
+   BRANCH / TRACK
+   ========================================================= */
+
+.control-node__track {
+  position: absolute;
+
+  right: 18px;
+  bottom: -14px;
+
+  width: 1px;
+  height: 16px;
+
+  background: var(--color-border-strong);
+}
+
+/* Last branch stops above root */
+
+.control-node__chamber--top
+.control-node__track {
+  height: 20px;
+}
+
+/* =========================================================
+   ENERGY PULSE
+   ========================================================= */
+
+.control-node__track::after {
+  content: '';
+
+  position: absolute;
+
+  left: 50%;
+  top: 100%;
+
+  width: 3px;
+  height: 18px;
+
+  transform:
+    translateX(-50%)
+    scaleY(0);
+
+  transform-origin: bottom;
+
+  border-radius: 999px;
+
+  background: var(--color-accent);
+
+  box-shadow:
+    0 0 6px rgba(216, 255, 62, 0.45);
+
+  opacity: 0;
+}
+
+/* =========================================================
+   OPEN DEPLOY
+   ========================================================= */
+
+.control-node--open
+.control-node__chamber {
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.control-node--open
+.control-node__chamber--replay {
+  transition-delay: 80ms;
+}
+
+.control-node--open
+.control-node__chamber--download {
+  transition-delay: 150ms;
+}
+
+.control-node--open
+.control-node__chamber--top {
+  transition-delay: 220ms;
+}
+
+/* =========================================================
+   ENERGY DEPLOY SEQUENCE
+   ========================================================= */
+
+.control-node--open
+.control-node__chamber--replay
+.control-node__track::after {
+  animation:
+    control-pulse 420ms ease-out 80ms;
+}
+
+.control-node--open
+.control-node__chamber--download
+.control-node__track::after {
+  animation:
+    control-pulse 420ms ease-out 220ms;
+}
+
+.control-node--open
+.control-node__chamber--top
+.control-node__track::after {
+  animation:
+    control-pulse 420ms ease-out 360ms;
+}
+
+@keyframes control-pulse {
+  0% {
+    transform:
+      translateX(-50%)
+      scaleY(0);
+
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      scaleY(1);
+
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   ACTION
+   ========================================================= */
+
+.control-node__action {
+  position: absolute;
+
+  right: 0;
+  top: 50%;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  width: 100%;
+  height: 32px;
+
+  padding: 0 7px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 3px;
+
+  background:
+    rgba(7, 9, 18, 0.94);
+
+  color: var(--color-text-secondary);
+
+  text-decoration: none;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+  pointer-events: auto;
+
+  transform: translateY(-50%);
+
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.control-node__action:hover,
+.control-node__action:focus-visible {
+  border-color: var(--color-accent);
+
+  color: var(--color-accent);
+
+  background:
+    rgba(216, 255, 62, 0.045);
+
+  transform:
+    translateY(-50%)
+    translateX(-3px);
+}
+
+/* =========================================================
+   ACTION ICON
+   ========================================================= */
+
+.control-node__action-icon {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  border: 1px solid var(--color-border-strong);
+
+  border-radius: 2px;
+
+  color: var(--color-text-muted);
+
+  font-size: 10px;
+
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.control-node__action:hover
+.control-node__action-icon,
+.control-node__action:focus-visible
+.control-node__action-icon {
+  border-color: var(--color-accent);
+
+  color: var(--color-accent);
+}
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+.control-node__root {
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+
+  z-index: 4;
+
+  width: 116px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 0;
+
+  border: 1px solid var(--color-border-strong);
+
+  border-radius: 4px;
+
+  background:
+    rgba(7, 9, 18, 0.96);
+
+  color: var(--color-text-secondary);
+
+  cursor: pointer;
+  pointer-events: auto;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background 0.3s ease;
+}
+
+.control-node__root:hover,
+.control-node__root:focus-visible {
+  border-color: var(--color-accent);
+
+  color: var(--color-accent);
+
+  background:
+    rgba(216, 255, 62, 0.05);
+}
+
+/* =========================================================
+   ROOT ICON
+   ========================================================= */
+
+.control-node__root-icon {
+  width: 15px;
+  height: 11px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.control-node__root-icon span {
+  display: block;
+
+  width: 100%;
+  height: 1px;
+
+  background: currentColor;
+
+  transform-origin: center;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.2s ease,
+    width 0.2s ease;
+}
+
+.control-node__root-icon span:nth-child(2) {
+  width: 65%;
+}
+
+.control-node__root-icon span:nth-child(3) {
+  width: 82%;
+}
+
+/* =========================================================
+   ROOT → CLOSE
+   ========================================================= */
+
+.control-node--open
+.control-node__root-icon span:nth-child(1) {
+  transform:
+    translateY(5px)
+    rotate(45deg);
+}
+
+.control-node--open
+.control-node__root-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+.control-node--open
+.control-node__root-icon span:nth-child(3) {
+  width: 100%;
+
+  transform:
+    translateY(-5px)
+    rotate(-45deg);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .control-node {
+    right: 18px;
+    bottom: 18px;
+
+    width: 180px;
+    height: 220px;
+  }
+
+  .control-node__chamber {
+    width: 160px;
+  }
+
+  .control-node__root {
+    width: 102px;
+    height: 36px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 374px) {
+  .control-node {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .control-node *,
+  .control-node *::before,
+  .control-node *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}

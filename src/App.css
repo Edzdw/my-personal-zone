@@ -5,7 +5,7 @@
   background: var(--color-bg);
 }
 
-.app > *:not(.space-background):not(.download-cv) {
+.app > *:not(.space-background):not(.control-node) {
   position: relative;
   z-index: 1;
 }
