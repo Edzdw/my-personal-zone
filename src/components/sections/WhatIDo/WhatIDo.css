@@ -1,791 +1,992 @@
-/* =========================================================
-   WHAT I DO
-   ========================================================= */
+/* ================================================= */
+/* WHAT I DO */
+/* ================================================= */
 
 .what-i-do {
   position: relative;
 
-  min-height: 100svh;
+  width: 100%;
+  height: 100svh;
+  min-height: 680px;
 
-  display: flex;
-  flex-direction: column;
-
-  padding: 32px 40px;
-
-  border-top: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: 42% 58%;
 
   overflow: hidden;
+
+  border-top: 1px solid var(--color-border);
 }
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+/* ================================================= */
+/* ACTIVE ELECTRIC BORDER */
+/* ================================================= */
 
-.what-i-do__header {
-  display: flex;
-  align-items: center;
+.what-i-do::before {
+  content: '';
 
-  gap: 16px;
+  position: absolute;
+  inset: 0;
 
-  color: var(--color-text-muted);
-
-  font-family: var(--font-mono);
-  font-size: 10px;
-
-  letter-spacing: 0.08em;
-}
-
-/* =========================================================
-   SYSTEM AREA
-   ========================================================= */
-
-.what-i-do__system {
-  position: relative;
-
-  flex: 1;
-
-  min-height: 620px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* =========================================================
-   CORE
-   ========================================================= */
-
-.system-core {
-  --core-x: 0px;
-  --core-y: 0px;
-  --core-intensity: 0;
-
-  position: relative;
-
-  width: min(620px, 48vw);
-  aspect-ratio: 1;
-
-  transform:
-    translate(
-      var(--core-x),
-      var(--core-y)
-    );
-
-  transition:
-    transform 0.15s ease-out;
+  pointer-events: none;
 
   opacity: 0;
 
-  scale: 0.88;
+  background:
+    linear-gradient(
+      to right,
+      var(--color-accent),
+      var(--color-accent)
+    )
+    top left / 56px 1px no-repeat,
 
-  transition:
-    opacity 0.8s ease,
-    scale 1s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.15s ease-out;
+    linear-gradient(
+      to bottom,
+      var(--color-accent),
+      var(--color-accent)
+    )
+    top left / 1px 56px no-repeat,
+
+    linear-gradient(
+      to left,
+      var(--color-accent),
+      var(--color-accent)
+    )
+    top right / 56px 1px no-repeat,
+
+    linear-gradient(
+      to bottom,
+      var(--color-accent),
+      var(--color-accent)
+    )
+    top right / 1px 56px no-repeat,
+
+    linear-gradient(
+      to right,
+      var(--color-accent),
+      var(--color-accent)
+    )
+    bottom left / 56px 1px no-repeat,
+
+    linear-gradient(
+      to top,
+      var(--color-accent),
+      var(--color-accent)
+    )
+    bottom left / 1px 56px no-repeat,
+
+    linear-gradient(
+      to left,
+      var(--color-accent),
+      var(--color-accent)
+    )
+    bottom right / 56px 1px no-repeat,
+
+    linear-gradient(
+      to top,
+      var(--color-accent),
+      var(--color-accent)
+    )
+    bottom right / 1px 56px no-repeat;
+
+  filter:
+    drop-shadow(
+      0 0 5px
+      rgba(216, 255, 62, 0.35)
+    );
+
+  z-index: 20;
+
+  transition: opacity 400ms ease;
 }
 
-.what-i-do--visible
-.system-core {
-  opacity: 1;
-  scale: 1;
+.what-i-do--active::before {
+  opacity: 0.7;
 }
 
-/* =========================================================
-   ORBITS
-   ========================================================= */
 
-.system-core__orbit {
+/* ================================================= */
+/* CORE SIDE */
+/* ================================================= */
+
+.what-i-do__core-side {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 32px 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border-right: 1px solid var(--color-border);
+}
+
+/* ================================================= */
+/* CORE WRAP */
+/* ================================================= */
+
+.what-i-do__core-wrap {
   position: absolute;
 
   left: 50%;
   top: 50%;
 
-  border: 1px solid var(--color-border);
+  transform: translate(-50%, -50%);
+}
+
+/* ================================================= */
+/* CORE */
+/* ================================================= */
+
+.what-i-do__core {
+  position: relative;
+
+  width: 190px;
+  height: 190px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 4;
+
+  transition:
+    filter 260ms ease,
+    transform 260ms ease;
+}
+
+/*
+ * Connection from CORE to the JOURNEY axis.
+ */
+
+.what-i-do__core::after {
+  content: '';
+
+  position: absolute;
+
+  top: 50%;
+  left: 100%;
+
+  width: 120px;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      to right,
+      var(--color-border-strong),
+      transparent
+    );
+}
+
+/* ================================================= */
+/* CORE RINGS */
+/* ================================================= */
+
+.what-i-do__core-ring {
+  position: absolute;
 
   border-radius: 50%;
 
-  transform:
-    translate(-50%, -50%);
+  pointer-events: none;
 }
 
-.system-core__orbit--one {
-  width: 42%;
-  height: 42%;
+.what-i-do__core-ring--outer {
+  inset: -18px;
 
-  border-color:
-    var(--color-border-strong);
+  border: 1px dashed var(--color-border-strong);
+
+  opacity: 0.63;
 
   animation:
-    core-orbit-rotate
-    18s
-    linear
-    infinite;
+    what-i-do-core-spin
+    20s linear infinite;
 }
 
-.system-core__orbit--two {
-  width: 67%;
-  height: 67%;
+.what-i-do__core-ring--inner {
+  inset: 25px;
+
+  border: 1px solid
+    rgba(216, 255, 62, 0.13);
+
+  animation:
+    what-i-do-core-pulse
+    3s ease-in-out infinite;
+}
+
+.what-i-do--active
+  .what-i-do__core {
+  filter:
+    drop-shadow(
+      0 0 14px
+        rgba(216, 255, 62, 0.28)
+    )
+    drop-shadow(
+      0 0 36px
+        rgba(216, 255, 62, 0.12)
+    );
+}
+
+.what-i-do--active
+  .what-i-do__core::after {
+  background:
+    linear-gradient(
+      to right,
+      rgba(216, 255, 62, 0.75),
+      transparent
+    );
+}
+
+.what-i-do--active
+  .what-i-do__core-ring--outer {
+  border-color:
+    rgba(216, 255, 62, 0.9);
+
+  box-shadow:
+    0 0 22px
+      rgba(216, 255, 62, 0.18);
+}
+
+.what-i-do--active
+  .what-i-do__core-ring--inner {
+  border-color:
+    rgba(216, 255, 62, 0.36);
+
+  box-shadow:
+    0 0 28px
+      rgba(216, 255, 62, 0.12);
+}
+
+.what-i-do--active
+  .what-i-do__core-status {
+  color: var(--color-text);
+  text-shadow:
+    0 0 12px
+      rgba(216, 255, 62, 0.4);
+}
+
+/* ================================================= */
+/* CORE TEXT */
+/* ================================================= */
+
+.what-i-do__core-caption {
+  position: relative;
+
+  margin-bottom: 9px;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+
+  color: var(--color-text-muted);
+}
+
+.what-i-do__core-year {
+  position: relative;
+
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1;
+
+  letter-spacing: -0.07em;
+
+  color: var(--color-text);
+}
+
+.what-i-do__core-status {
+  position: relative;
+
+  margin-top: 12px;
+
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.16em;
+
+  color: var(--color-accent);
+}
+
+/* ================================================= */
+/* CORE META */
+/* ================================================= */
+
+.what-i-do__core-meta {
+  display: flex;
+  justify-content: space-between;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+
+  color: var(--color-text-muted);
+}
+
+/* ================================================= */
+/* JOURNEY SIDE */
+/* ================================================= */
+
+.what-i-do__journey {
+  position: relative;
+
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================================================= */
+/* JOURNEY HEADER */
+/* ================================================= */
+
+.journey__header {
+  position: relative;
+
+  height: 73px;
+
+  padding: 32px 40px 0;
+
+  display: flex;
+  justify-content: space-between;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+
+  color: var(--color-text-muted);
+
+  z-index: 10;
+}
+
+/* ================================================= */
+/* VIEWPORT */
+/* ================================================= */
+
+.journey__viewport {
+  position: relative;
+
+  flex: 1;
+
+  min-height: 0;
+
+  overflow: hidden;
+}
+
+/* ================================================= */
+/* AXIS */
+/* ================================================= */
+
+.journey__axis {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 1px;
+
+  transform: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-border-strong) 12%,
+      var(--color-border-strong) 88%,
+      transparent
+    );
+
+  z-index: 1;
+}
+
+.journey__axis::before,
+.journey__axis::after {
+  content: '';
+
+  position: absolute;
+
+  left: 50%;
+
+  width: 5px;
+  height: 5px;
+
+  transform:
+    translateX(-50%)
+    rotate(45deg);
+
+  border: 1px solid var(--color-border-strong);
+
+  background: var(--color-bg);
+}
+
+.journey__axis::before {
+  top: 12%;
+}
+
+.journey__axis::after {
+  bottom: 12%;
+}
+
+/* ================================================= */
+/* TRACK */
+/* ================================================= */
+
+.journey__track {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 14vh;
+  padding-bottom: 14vh;
+
+  transition:
+    transform 300ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+
+  z-index: 3;
+}
+
+/* ================================================= */
+/* ITEM */
+/* ================================================= */
+
+.journey__item {
+  position: relative;
+
+  flex: 0 0 18vh;
+
+  min-height: 120px;
+
+  opacity: 0.16;
+
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.journey__item--active {
+  opacity: 1;
+}
+
+.journey__item--far {
+  opacity: 0.06;
+}
+
+/* ================================================= */
+/* NODE */
+/* ================================================= */
+
+.journey__node {
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  width: 11px;
+  height: 11px;
 
   transform:
     translate(-50%, -50%)
     rotate(45deg);
 
-  border-style: dashed;
+  border: 1px solid var(--color-border-strong);
 
-  opacity: 0.55;
+  background: var(--color-bg);
 
-  animation:
-    core-orbit-rotate-reverse
-    28s
-    linear
-    infinite;
+  z-index: 5;
+
+  transition:
+    background 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
 }
 
-.system-core__orbit--three {
-  width: 91%;
-  height: 91%;
-
-  border-color:
-    rgba(216, 255, 62, 0.12);
-
-  animation:
-    core-orbit-pulse
-    4s
-    ease-in-out
-    infinite;
-}
-
-/* =========================================================
-   CORE CENTER
-   ========================================================= */
-
-.system-core__center {
+.journey__node span {
   position: absolute;
 
   left: 50%;
   top: 50%;
 
-  width: 112px;
-  height: 112px;
+  width: 3px;
+  height: 3px;
+
+  transform: translate(-50%, -50%);
+
+  background: var(--color-text-muted);
+}
+
+.journey__item--active .journey__node {
+  border-color: var(--color-accent);
+
+  background: var(--color-accent);
+
+  box-shadow:
+    0 0 0 5px
+      rgba(216, 255, 62, 0.045),
+    0 0 24px
+      rgba(216, 255, 62, 0.18);
+}
+
+.journey__item--active
+  .journey__node
+  span {
+  background: var(--color-bg);
+}
+
+/* ================================================= */
+/* ITEM CONTENT */
+/* ================================================= */
+
+.journey__item-content {
+  position: absolute;
+
+  top: 50%;
+
+  left: 38px;
+  right: 70px;
+
+  width: auto;
+
+  padding: 16px 18px;
+
+  transform: translateY(-50%);
+
+  border: 1px solid var(--color-border);
+
+  /*
+   * Keep the background only on the timeline card.
+   * This allows SpaceBackground to remain visible
+   * everywhere else in the section.
+   */
+
+  background:
+    rgba(7, 9, 18, 0.78);
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    border-color 300ms ease,
+    transform 300ms ease;
+}
+
+/* ================================================= */
+/* CONNECTION LINE */
+/* ================================================= */
+
+.journey__item-content::before {
+  content: '';
+
+  position: absolute;
+
+  top: 50%;
+  left: -38px;
+
+  width: 38px;
+  height: 1px;
+
+  background: var(--color-border);
+
+  transition:
+    background 300ms ease,
+    width 300ms ease;
+}
+
+.journey__item--active
+  .journey__item-content {
+  border-color: var(--color-accent);
+
+  box-shadow:
+    0 0 0 1px
+      rgba(216, 255, 62, 0.08),
+    0 0 24px
+      rgba(216, 255, 62, 0.1);
+
+  transform:
+    translateY(-50%)
+    translateX(3px)
+    scale(1.050);
+}
+
+.journey__item--active
+  .journey__item-content::before {
+  background: var(--color-accent);
+}
+
+/* ================================================= */
+/* TEXT */
+/* ================================================= */
+
+.journey__year {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+
+  color: var(--color-accent);
+}
+
+.journey__item-content h3 {
+  margin: 0 0 9px;
+
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.1;
+
+  letter-spacing: -0.025em;
+
+  color: var(--color-text);
+}
+
+.journey__item-content p {
+  margin: 0;
+
+  max-width: 300px;
+
+  font-family: var(--font-body);
+  font-size: 11px;
+  line-height: 1.65;
+
+  color: var(--color-text-secondary);
+}
+
+/* ================================================= */
+/* PROGRESS */
+/* ================================================= */
+
+.journey__progress {
+  position: absolute;
+
+  right: 28px;
+  top: 50%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-
-  gap: 5px;
-
-  transform:
-    translate(-50%, -50%);
-
-  border: 1px solid
-    rgba(216, 255, 62, 0.4);
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(216, 255, 62, 0.07),
-      rgba(7, 9, 18, 0.96) 68%
-    );
-
-  box-shadow:
-    0 0 35px
-      rgba(216, 255, 62, 0.06);
-
-  transition:
-    border-color 0.4s ease,
-    box-shadow 0.4s ease;
-}
-
-.system-core--active
-.system-core__center {
-  border-color:
-    var(--color-accent);
-
-  box-shadow:
-    0 0 45px
-      rgba(216, 255, 62, 0.14);
-}
-
-.system-core__center-ring {
-  position: absolute;
-
-  inset: -7px;
-
-  border: 1px solid
-    rgba(216, 255, 62, 0.12);
-
-  border-radius: 50%;
-
-  animation:
-    core-center-pulse
-    2.4s
-    ease-in-out
-    infinite;
-}
-
-.system-core__center-label {
-  color: var(--color-text);
-
-  font-family: var(--font-mono);
-  font-size: 9px;
-
-  letter-spacing: 0.18em;
-}
-
-.system-core__center-status {
-  color: var(--color-accent);
-
-  font-family: var(--font-mono);
-  font-size: 7px;
-
-  letter-spacing: 0.12em;
-
-  opacity: 0.7;
-}
-
-/* =========================================================
-   PARTICLES
-   ========================================================= */
-
-.system-core__particle {
-  position: absolute;
-
-  width: 4px;
-  height: 4px;
-
-  border-radius: 50%;
-
-  background: var(--color-accent);
-
-  box-shadow:
-    0 0 8px
-      rgba(216, 255, 62, 0.65);
-}
-
-.system-core__particle--one {
-  left: 16%;
-  top: 31%;
-
-  animation:
-    particle-orbit-one
-    7s
-    linear
-    infinite;
-}
-
-.system-core__particle--two {
-  right: 13%;
-  top: 42%;
-
-  animation:
-    particle-orbit-two
-    9s
-    linear
-    infinite;
-}
-
-.system-core__particle--three {
-  left: 31%;
-  bottom: 12%;
-
-  animation:
-    particle-orbit-three
-    11s
-    linear
-    infinite;
-}
-
-/* =========================================================
-   CONNECTIONS
-   ========================================================= */
-
-.system-core__connection {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  height: 1px;
-
-  width: 27%;
-
-  transform-origin: left center;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(216, 255, 62, 0.38),
-      var(--color-border),
-      transparent
-    );
-
-  opacity: 0.45;
-
-  transition:
-    opacity 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.system-core__connection.is-active {
-  opacity: 1;
-
-  box-shadow:
-    0 0 8px
-      rgba(216, 255, 62, 0.25);
-}
-
-/* =========================================================
-   CONNECTION POSITIONS
-   ========================================================= */
-
-.system-core__connection--software {
-  transform:
-    translateY(-50%)
-    rotate(-42deg);
-}
-
-.system-core__connection--automation {
-  transform:
-    translateY(-50%)
-    rotate(42deg);
-}
-
-.system-core__connection--systems {
-  transform:
-    translateY(-50%)
-    rotate(138deg);
-}
-
-.system-core__connection--products {
-  transform:
-    translateY(-50%)
-    rotate(222deg);
-}
-
-/* =========================================================
-   NODE
-   ========================================================= */
-
-.system-node {
-  position: absolute;
-
-  z-index: 5;
-
-  width: 142px;
-  height: 42px;
-
-  display: flex;
-  align-items: center;
-
   gap: 9px;
 
-  padding: 0 10px;
-
-  border: 1px solid var(--color-border);
-
-  border-radius: 3px;
-
-  background:
-    rgba(7, 9, 18, 0.9);
-
-  color: var(--color-text-secondary);
+  transform: translateY(-50%);
 
   font-family: var(--font-mono);
   font-size: 8px;
+  letter-spacing: 0.08em;
 
-  letter-spacing: 0.1em;
-
-  cursor: pointer;
-
-  transition:
-    border-color 0.3s ease,
-    color 0.3s ease,
-    background 0.3s ease,
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-.system-node:hover,
-.system-node--active {
-  border-color: var(--color-accent);
-
-  color: var(--color-accent);
-
-  background:
-    rgba(216, 255, 62, 0.045);
-
-  transform: scale(1.04);
-}
-
-.system-node--dimmed {
-  opacity: 0.25;
-}
-
-/* =========================================================
-   NODE POSITIONS
-   ========================================================= */
-
-.system-node--software {
-  left: 2%;
-  top: 27%;
-}
-
-.system-node--automation {
-  right: 2%;
-  top: 27%;
-}
-
-.system-node--systems {
-  left: 2%;
-  bottom: 27%;
-}
-
-.system-node--products {
-  right: 2%;
-  bottom: 27%;
-}
-
-/* =========================================================
-   NODE CONTENT
-   ========================================================= */
-
-.system-node__index {
   color: var(--color-text-muted);
 
-  font-size: 7px;
+  z-index: 10;
 }
 
-.system-node__label {
-  flex: 1;
+.journey__progress-line {
+  position: relative;
 
-  text-align: left;
+  width: 1px;
+  height: 110px;
+
+  overflow: hidden;
+
+  background: var(--color-border);
 }
 
-.system-node__indicator {
-  width: 5px;
-  height: 5px;
+.journey__progress-line span {
+  position: absolute;
 
-  border: 1px solid
-    var(--color-text-muted);
+  left: 0;
+  bottom: 0;
 
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
 
-  transition:
-    background 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.system-node--active
-.system-node__indicator {
-  border-color: var(--color-accent);
+  transform-origin: bottom;
 
   background: var(--color-accent);
 
-  box-shadow:
-    0 0 8px
-      rgba(216, 255, 62, 0.5);
-}
-
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
-
-.what-i-do__description {
-  position: absolute;
-
-  left: 40px;
-  bottom: 8%;
-
-  width: 310px;
-
-  opacity: 0;
-
-  transform:
-    translateY(12px);
-
   transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
+    transform 300ms
+    cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.what-i-do__description--active {
-  opacity: 1;
 
-  transform:
-    translateY(0);
+.what-i-do__core-current {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 0;
+  text-align: center;
 }
 
-.what-i-do__description-index {
-  margin-bottom: 14px;
-
-  color: var(--color-text-muted);
-
-  font-family: var(--font-mono);
-  font-size: 8px;
-
-  letter-spacing: 0.12em;
-}
-
-.what-i-do__description-main {
-  margin: 0;
-
-  color: var(--color-text-secondary);
+.what-i-do__core-year {
+  display: block;
 
   font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1;
 
-  font-size: 20px;
+  letter-spacing: -0.07em;
 
-  line-height: 1.05;
+  color: var(--color-text);
 
-  letter-spacing: -0.035em;
+  animation:
+    core-current-in
+    420ms
+    cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.what-i-do__description-details {
-  display: flex;
+.what-i-do__core-status {
+  display: block;
 
-  flex-wrap: wrap;
+  margin-top: 12px;
 
-  gap: 8px 14px;
-
-  margin-top: 18px;
-
-  color: var(--color-text-muted);
+  max-width: 130px;
 
   font-family: var(--font-mono);
+  font-size: 7px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
 
-  font-size: 8px;
+  color: var(--color-accent);
 
-  letter-spacing: 0.08em;
+  animation:
+    core-current-in
+    420ms
+    80ms
+    both
+    cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.what-i-do__footer {
-  display: flex;
-  justify-content: space-between;
-
-  padding-top: 20px;
-
-  border-top: 1px solid var(--color-border);
-
-  color: var(--color-text-muted);
-
-  font-family: var(--font-mono);
-
-  font-size: 8px;
-
-  letter-spacing: 0.08em;
-}
-
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
-@keyframes core-orbit-rotate {
+@keyframes core-current-in {
   from {
-    transform:
-      translate(-50%, -50%)
-      rotate(0deg);
+    opacity: 0;
+    transform: translateY(10px);
   }
 
   to {
-    transform:
-      translate(-50%, -50%)
-      rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes core-orbit-rotate-reverse {
-  from {
-    transform:
-      translate(-50%, -50%)
-      rotate(45deg);
-  }
 
+/* ================================================= */
+/* CORE ANIMATION */
+/* ================================================= */
+
+@keyframes what-i-do-core-spin {
   to {
-    transform:
-      translate(-50%, -50%)
-      rotate(-315deg);
+    transform: rotate(360deg);
   }
 }
 
-@keyframes core-orbit-pulse {
+@keyframes what-i-do-core-pulse {
   0%,
   100% {
     opacity: 0.35;
+    transform: scale(1);
   }
 
   50% {
-    opacity: 0.8;
+    opacity: 0.85;
+    transform: scale(1.06);
   }
 }
 
-@keyframes core-center-pulse {
-  0%,
-  100% {
-    transform:
-      scale(1);
-    opacity: 0.35;
-  }
+/* ================================================= */
+/* MOBILE */
+/* ================================================= */
 
-  50% {
-    transform:
-      scale(1.08);
-    opacity: 0.8;
-  }
-}
-
-@keyframes particle-orbit-one {
-  from {
-    transform: rotate(0deg)
-      translateX(30px);
-  }
-
-  to {
-    transform: rotate(360deg)
-      translateX(30px);
-  }
-}
-
-@keyframes particle-orbit-two {
-  from {
-    transform: rotate(0deg)
-      translateX(20px);
-  }
-
-  to {
-    transform: rotate(-360deg)
-      translateX(20px);
-  }
-}
-
-@keyframes particle-orbit-three {
-  from {
-    transform: rotate(0deg)
-      translateX(24px);
-  }
-
-  to {
-    transform: rotate(360deg)
-      translateX(24px);
-  }
-}
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .what-i-do {
-    min-height: auto;
+    height: 100svh;
+    min-height: 620px;
 
-    padding: 24px 20px 40px;
+    grid-template-columns: 36% 64%;
   }
 
-  .what-i-do__system {
-    min-height: auto;
+  /* ================================================= */
+  /* CORE SIDE */
+  /* ================================================= */
 
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-
-    padding: 70px 0 40px;
+  .what-i-do__core-side {
+    padding: 24px 18px;
   }
 
-  .system-core {
-    width: min(100%, 360px);
-
-    margin-bottom: 55px;
+  .what-i-do__core-wrap {
+    left: 50%;
   }
 
-  .system-node {
-    width: 130px;
+  .what-i-do__core {
+    width: 105px;
+    height: 105px;
   }
 
-  .system-node--software {
-    left: -2%;
-    top: 24%;
+  .what-i-do__core::after {
+    left: 100%;
+    right: auto;
+
+    width: 80px;
   }
 
-  .system-node--automation {
-    right: -2%;
-    top: 24%;
+  .what-i-do__core-ring--outer {
+    inset: -10px;
   }
 
-  .system-node--systems {
-    left: -2%;
-    bottom: 24%;
+  .what-i-do__core-ring--inner {
+    inset: 15px;
   }
 
-  .system-node--products {
-    right: -2%;
-    bottom: 24%;
+  .what-i-do__core-caption {
+    font-size: 6px;
   }
 
-  .what-i-do__description {
-    position: relative;
-
-    left: auto;
-    bottom: auto;
-
-    width: 100%;
-
-    min-height: 130px;
+  .what-i-do__core-year {
+    font-size: 24px;
   }
 
-  .what-i-do__description-main {
-    font-size: 21px;
+  .what-i-do__core-status {
+    margin-top: 7px;
+
+    font-size: 5px;
   }
 
-  .what-i-do__footer {
-    flex-direction: column;
-
-    gap: 8px;
-  }
-}
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 374px) {
-  .system-core {
-    width: 320px;
+  .what-i-do__core-meta {
+    display: none;
   }
 
-  .system-node {
-    width: 120px;
+  /* ================================================= */
+  /* JOURNEY HEADER */
+  /* ================================================= */
+
+  .journey__header {
+    height: 58px;
+
+    padding:
+      24px
+      18px
+      0;
+
+    font-size: 6px;
+  }
+
+  /* ================================================= */
+  /* AXIS */
+  /* ================================================= */
+
+  .journey__axis {
+    left: 0;
+  }
+
+  /* ================================================= */
+  /* TRACK */
+  /* ================================================= */
+
+  .journey__item {
+    flex-basis: 15vh;
+  }
+
+  /* ================================================= */
+  /* NODE */
+  /* ================================================= */
+
+  .journey__node {
+    left: 0;
+
+    width: 8px;
+    height: 8px;
+  }
+
+  /* ================================================= */
+  /* CONTENT */
+  /* ================================================= */
+
+  .journey__item-content {
+    left: 22px;
+    right: 18px;
+
+    width: auto;
+
+    padding: 10px 11px;
+  }
+
+  .journey__item-content::before {
+    left: -22px;
+
+    width: 22px;
+  }
+
+  .journey__item-content h3 {
+    font-size: 10px;
+  }
+
+  .journey__item-content p {
+    font-size: 8px;
+    line-height: 1.5;
+  }
+
+  .journey__year {
+    margin-bottom: 5px;
 
     font-size: 7px;
   }
 
-  .system-core__center {
-    width: 92px;
-    height: 92px;
+  /* ================================================= */
+  /* PROGRESS */
+  /* ================================================= */
+
+  .journey__progress {
+    right: 9px;
+  }
+
+  .journey__progress-line {
+    height: 70px;
+  }
+
+  /* ================================================= */
+  /* ACTIVE BORDER */
+  /* ================================================= */
+
+  .what-i-do--active::before {
+    animation-duration: 4.8s;
   }
 }
 
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
+/* ================================================= */
+/* REDUCED MOTION */
+/* ================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .system-core__orbit,
-  .system-core__particle,
-  .system-core__center-ring {
-    animation: none !important;
+  .what-i-do__core-ring {
+    animation: none;
   }
 
-  .system-core,
-  .system-node,
-  .what-i-do__description {
-    transition: none !important;
+  .journey__track {
+    transition: none;
   }
+
+  .journey__progress-line span {
+    transition: none;
+  }
+
+  .what-i-do--active::before {
+    animation: none;
+  }
+
+
+  
+
+
+
+/* 
+ */
+
+ 
 }

@@ -1,359 +1,363 @@
 import { useEffect, useRef, useState } from 'react'
 import './WhatIDo.css'
+import { journey } from '../../../data/journey'
 
-type SystemNode = {
-  id: string
-  label: string
-  description: string
-  details: string[]
-}
-
-const nodes: SystemNode[] = [
-  {
-    id: 'software',
-    label: 'SOFTWARE',
-    description:
-      'I build digital products that solve real problems.',
-    details: [
-      'WEB APPLICATIONS',
-      'INTERFACES',
-      'DIGITAL PRODUCTS',
-    ],
-  },
-  {
-    id: 'automation',
-    label: 'AUTOMATION',
-    description:
-      'I turn repetitive work into systems that run themselves.',
-    details: [
-      'WORKFLOWS',
-      'APIs',
-      'PROCESS AUTOMATION',
-    ],
-  },
-  {
-    id: 'systems',
-    label: 'SYSTEMS',
-    description:
-      'I connect logic, data, and technology into something coherent.',
-    details: [
-      'ARCHITECTURE',
-      'DATA',
-      'SYSTEM DESIGN',
-    ],
-  },
-  {
-    id: 'products',
-    label: 'PRODUCTS',
-    description:
-      'I like turning ideas into things people can actually use.',
-    details: [
-      'IDEAS',
-      'EXPERIMENTS',
-      'REAL THINGS',
-    ],
-  },
-]
+const ITEM_STEP = 18
+const SCROLL_SENSITIVITY = 0.1
+const CORE_TRIGGER_TOLERANCE = 34
 
 function WhatIDo() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const coreRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const coreRef = useRef<HTMLDivElement | null>(null)
 
-  const [activeNode, setActiveNode] =
-    useState<string | null>(null)
+  const activeIndexRef = useRef(0)
+  const journeyScrollRef = useRef(0)
+  const isLockedRef = useRef(false)
 
-  const [isVisible, setIsVisible] =
-    useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [journeyOffset, setJourneyOffset] = useState(0)
+  const [isActive, setIsActive] = useState(false)
 
-  useEffect(() => {
+  const clamp = (value: number, min: number, max: number) =>
+    Math.min(Math.max(value, min), max)
+
+  const getCoreCenterDelta = () => {
+    const core = coreRef.current
     const section = sectionRef.current
 
-    if (!section) return
+    if (!core || !section) {
+      return Number.POSITIVE_INFINITY
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      {
-        threshold: 0.2,
-      }
-    )
+    const coreRect = core.getBoundingClientRect()
+    const coreCenter =
+      coreRect.top + coreRect.height / 2
 
-    observer.observe(section)
+    const viewportCenter =
+      window.innerHeight / 2
+
+    return Math.abs(coreCenter - viewportCenter)
+  }
+
+  const updateCoreActivation = () => {
+    const section = sectionRef.current
+    const core = coreRef.current
+
+    if (!section || !core) {
+      return
+    }
+
+    const sectionRect = section.getBoundingClientRect()
+    const viewportHeight = window.innerHeight
+    const inViewport =
+      sectionRect.top <= viewportHeight &&
+      sectionRect.bottom >= 0
+
+    const coreCenterDelta = getCoreCenterDelta()
+    const shouldActivate =
+      inViewport &&
+      coreCenterDelta <= CORE_TRIGGER_TOLERANCE
+
+    if (shouldActivate) {
+      isLockedRef.current = true
+      setIsActive(true)
+      return
+    }
+
+    if (!isLockedRef.current) {
+      setIsActive(false)
+    }
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      updateCoreActivation()
+    }
+
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    })
+
+    window.addEventListener('resize', handleScroll)
+
+    updateCoreActivation()
 
     return () => {
-      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
     }
   }, [])
 
   useEffect(() => {
-    const core = coreRef.current
+    const handleWheel = (event: WheelEvent) => {
+      const section = sectionRef.current
+      if (!section) {
+        return
+      }
 
-    if (!core) return
+      const sectionRect = section.getBoundingClientRect()
+      const viewportHeight = window.innerHeight
+      const inViewport =
+        sectionRect.top <= viewportHeight &&
+        sectionRect.bottom >= 0
 
-    const handlePointerMove = (
-      event: PointerEvent
-    ) => {
-      const rect = core.getBoundingClientRect()
+      if (!inViewport && !isLockedRef.current) {
+        return
+      }
 
-      const x =
-        event.clientX -
-        (rect.left + rect.width / 2)
+      if (isLockedRef.current) {
+        const direction = event.deltaY > 0 ? 1 : -1
 
-      const y =
-        event.clientY -
-        (rect.top + rect.height / 2)
+        const atStart =
+          activeIndexRef.current === 0 &&
+          journeyScrollRef.current <= 0
 
-      const distance = Math.sqrt(
-        x * x + y * y
-      )
+        const atEnd =
+          activeIndexRef.current === journey.length - 1 &&
+          journeyScrollRef.current >=
+          (journey.length - 1) * ITEM_STEP
 
-      const maxDistance = 260
+        if (
+          (direction < 0 && atStart) ||
+          (direction > 0 && atEnd)
+        ) {
+          isLockedRef.current = false
+          setIsActive(false)
+          return
+        }
 
-      const intensity = Math.max(
-        0,
-        1 - distance / maxDistance
-      )
+        event.preventDefault()
 
-      core.style.setProperty(
-        '--core-x',
-        `${x * 0.025}px`
-      )
+        const normalizedDelta =
+          event.deltaY * SCROLL_SENSITIVITY
 
-      core.style.setProperty(
-        '--core-y',
-        `${y * 0.025}px`
-      )
+        journeyScrollRef.current = clamp(
+          journeyScrollRef.current + normalizedDelta,
+          0,
+          (journey.length - 1) * ITEM_STEP
+        )
 
-      core.style.setProperty(
-        '--core-intensity',
-        String(intensity)
-      )
+        const nextIndex = clamp(
+          Math.round(
+            journeyScrollRef.current / ITEM_STEP
+          ),
+          0,
+          journey.length - 1
+        )
+
+        setJourneyOffset(journeyScrollRef.current)
+
+        if (nextIndex !== activeIndexRef.current) {
+          activeIndexRef.current = nextIndex
+          setActiveIndex(nextIndex)
+        }
+
+        return
+      }
+
+      if (getCoreCenterDelta() <= CORE_TRIGGER_TOLERANCE) {
+        isLockedRef.current = true
+        setIsActive(true)
+      }
     }
 
-    window.addEventListener(
-      'pointermove',
-      handlePointerMove
-    )
+    window.addEventListener('wheel', handleWheel, {
+      passive: false,
+      capture: true
+    })
 
     return () => {
-      window.removeEventListener(
-        'pointermove',
-        handlePointerMove
-      )
+      window.removeEventListener('wheel', handleWheel, {
+        capture: true
+      })
     }
   }, [])
 
-  const activeData =
-    nodes.find(
-      (node) => node.id === activeNode
-    ) ?? null
+  useEffect(() => {
+    activeIndexRef.current = activeIndex
+  }, [activeIndex])
+
+  useEffect(() => {
+    if (isActive) {
+      journeyScrollRef.current =
+        activeIndexRef.current * ITEM_STEP
+
+      setJourneyOffset(journeyScrollRef.current)
+    }
+  }, [isActive])
+
+  const getItemClassName = (index: number) => {
+    const distance = Math.abs(index - activeIndex)
+
+    return [
+      'journey__item',
+      index === activeIndex
+        ? 'journey__item--active'
+        : '',
+      distance > 2
+        ? 'journey__item--far'
+        : ''
+    ]
+      .filter(Boolean)
+      .join(' ')
+  }
 
   return (
     <section
       ref={sectionRef}
-      className={`what-i-do ${
-        isVisible
-          ? 'what-i-do--visible'
-          : ''
-      }`}
+      className={[
+        'what-i-do',
+        isActive ? 'what-i-do--active' : ''
+      ]
+        .filter(Boolean)
+        .join(' ')}
     >
-      {/* =================================================
-          HEADER
-          ================================================= */}
+      {/* ========================================= */}
+      {/* CORE */}
+      {/* ========================================= */}
 
-      <div className="what-i-do__header">
-        <span className="section-index">
-          01
-        </span>
+      <div className="what-i-do__core-side">
+        <div className="what-i-do__core-wrap">
+          <div
+            ref={coreRef}
+            className="what-i-do__core"
+          >
+            <span
+              className="
+                what-i-do__core-ring
+                what-i-do__core-ring--outer
+              "
+            />
 
-        <span className="section-title">
-          WHAT I DO
-        </span>
-      </div>
+            <span
+              className="
+                what-i-do__core-ring
+                what-i-do__core-ring--inner
+              "
+            />
 
-      {/* =================================================
-          SYSTEM
-          ================================================= */}
-
-      <div className="what-i-do__system">
-
-        <div
-          ref={coreRef}
-          className={`system-core ${
-            activeNode
-              ? 'system-core--active'
-              : ''
-          }`}
-        >
-          {/* Orbit */}
-          <div className="system-core__orbit system-core__orbit--one" />
-          <div className="system-core__orbit system-core__orbit--two" />
-          <div className="system-core__orbit system-core__orbit--three" />
-
-          {/* Energy particles */}
-          <span className="system-core__particle system-core__particle--one" />
-          <span className="system-core__particle system-core__particle--two" />
-          <span className="system-core__particle system-core__particle--three" />
-
-          {/* Core */}
-          <div className="system-core__center">
-            <span className="system-core__center-ring" />
-
-            <span className="system-core__center-label">
+            <span className="what-i-do__core-caption">
               CORE
             </span>
 
-            <span className="system-core__center-status">
-              {activeNode
-                ? 'CONNECTED'
-                : 'ONLINE'}
-            </span>
+            <div className="what-i-do__core-current">
+              <span
+                key={`year-${activeIndex}`}
+                className="what-i-do__core-year"
+              >
+                {journey[activeIndex].year}
+              </span>
+
+              <span
+                key={`status-${activeIndex}`}
+                className="what-i-do__core-status"
+              >
+                {journey[activeIndex].title}
+              </span>
+            </div>
           </div>
-
-          {/* Connection lines */}
-
-          <span
-            className={`system-core__connection system-core__connection--software ${
-              activeNode === 'software'
-                ? 'is-active'
-                : ''
-            }`}
-          />
-
-          <span
-            className={`system-core__connection system-core__connection--automation ${
-              activeNode === 'automation'
-                ? 'is-active'
-                : ''
-            }`}
-          />
-
-          <span
-            className={`system-core__connection system-core__connection--systems ${
-              activeNode === 'systems'
-                ? 'is-active'
-                : ''
-            }`}
-          />
-
-          <span
-            className={`system-core__connection system-core__connection--products ${
-              activeNode === 'products'
-                ? 'is-active'
-                : ''
-            }`}
-          />
-
-          {/* Nodes */}
-
-          {nodes.map((node) => (
-            <button
-              key={node.id}
-              type="button"
-              className={`system-node system-node--${node.id} ${
-                activeNode === node.id
-                  ? 'system-node--active'
-                  : ''
-              } ${
-                activeNode &&
-                activeNode !== node.id
-                  ? 'system-node--dimmed'
-                  : ''
-              }`}
-              onMouseEnter={() =>
-                setActiveNode(node.id)
-              }
-              onMouseLeave={() =>
-                setActiveNode(null)
-              }
-              onFocus={() =>
-                setActiveNode(node.id)
-              }
-              onBlur={() =>
-                setActiveNode(null)
-              }
-            >
-              <span className="system-node__index">
-                {node.id === 'software'
-                  ? '01'
-                  : node.id === 'automation'
-                    ? '02'
-                    : node.id === 'systems'
-                      ? '03'
-                      : '04'}
-              </span>
-
-              <span className="system-node__label">
-                {node.label}
-              </span>
-
-              <span className="system-node__indicator" />
-            </button>
-          ))}
         </div>
 
-        {/* =================================================
-            DESCRIPTION
-            ================================================= */}
+        <div className="what-i-do__core-meta">
+          <span>
+            02 — JOURNEY
+          </span>
 
-        <div
-          className={`what-i-do__description ${
-            activeData
-              ? 'what-i-do__description--active'
-              : ''
-          }`}
-        >
-          <div className="what-i-do__description-index">
-            {activeData
-              ? `// ${activeData.id.toUpperCase()}`
-              : '// SYSTEM'}
-          </div>
-
-          <p className="what-i-do__description-main">
-            {activeData
-              ? activeData.description
-              : 'I turn ideas into systems, software, and things that can exist in the real world.'}
-          </p>
-
-          <div className="what-i-do__description-details">
-            {activeData
-              ? activeData.details.map(
-                  (detail) => (
-                    <span key={detail}>
-                      {detail}
-                    </span>
-                  )
-                )
-              : (
-                <>
-                  <span>THINK</span>
-                  <span>BUILD</span>
-                  <span>EXPLORE</span>
-                </>
-              )}
-          </div>
+          <span>
+            {String(activeIndex + 1).padStart(2, '0')}
+            {' / '}
+            {String(journey.length).padStart(2, '0')}
+          </span>
         </div>
       </div>
 
-      {/* =================================================
-          FOOTER
-          ================================================= */}
+      {/* ========================================= */}
+      {/* JOURNEY */}
+      {/* ========================================= */}
 
-      <div className="what-i-do__footer">
-        <span>
-          SYSTEM STATUS: ONLINE
-        </span>
+      <div className="what-i-do__journey">
+        <div className="journey__header">
+          <span>
+            JOURNEY
+          </span>
 
-        <span>
-          04 MODULES CONNECTED
-        </span>
+          <span>
+            {String(activeIndex + 1).padStart(2, '0')}
+            {' / '}
+            {String(journey.length).padStart(2, '0')}
+          </span>
+        </div>
 
-        <span>
-          INTERACTION: ENABLED
-        </span>
+        <div className="journey__viewport">
+          <div className="journey__axis" />
+
+          <div
+            className="journey__track"
+            style={{
+              transform: `
+                translateY(
+                  -${journeyOffset}vh
+                )
+              `
+            }}
+          >
+            {journey.map((item, index) => (
+              <div
+                key={item.year}
+                className={getItemClassName(index)}
+              >
+                <span className="journey__node">
+                  <span />
+                </span>
+
+                <div className="journey__item-content">
+                  <span className="journey__year">
+                    {item.year}
+                  </span>
+
+                  <h3>
+                    {item.title}
+                  </h3>
+
+                  <p>
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ===================================== */}
+          {/* PROGRESS */}
+          {/* ===================================== */}
+
+          <div className="journey__progress">
+            <span>
+              {String(activeIndex + 1).padStart(2, '0')}
+            </span>
+
+            <div className="journey__progress-line">
+              <span
+                style={{
+                  transform: `
+                    scaleY(
+                      ${journey.length <= 1
+                      ? 1
+                      :
+                      journeyOffset /
+                      ((journey.length - 1) * ITEM_STEP)
+                    }
+                    )
+                  `
+                }}
+              />
+            </div>
+
+            <span>
+              {String(journey.length).padStart(2, '0')}
+            </span>
+          </div>
+        </div>
       </div>
     </section>
   )
