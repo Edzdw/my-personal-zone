@@ -166,6 +166,12 @@
 }
 
 .control-node--open
+.control-node__chamber
+.control-node__action {
+  pointer-events: auto;
+}
+
+.control-node--open
 .control-node__chamber--replay {
   transition-delay: 80ms;
 }
@@ -264,7 +270,7 @@
   white-space: nowrap;
 
   cursor: pointer;
-  pointer-events: auto;
+  pointer-events: none;
 
   transform: translateY(-50%);
 

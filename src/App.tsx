@@ -7,6 +7,7 @@ import EntrySequence from './components/effects/EntrySequence/EntrySequence'
 import Footer from './components/layout/Footer/Footer'
 
 import Hero from './components/sections/Hero/Hero'
+// import WhatIDo from './components/sections/WhatIDo/WhatIDo'
 import WhatIDo from './components/sections/WhatIDo/WhatIDo'
 import SelectedWork from './components/sections/SelectedWork/SelectedWork'
 import BeyondCode from './components/sections/BeyondCode/BeyondCode'

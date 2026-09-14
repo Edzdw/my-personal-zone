@@ -6,101 +6,44 @@
   position: relative;
 
   width: 100%;
-  height: 100svh;
-  min-height: 680px;
 
-  display: grid;
-  grid-template-columns: 42% 58%;
-
-  overflow: hidden;
-
-  border-top: 1px solid var(--color-border);
-}
-
-/* ================================================= */
-/* ACTIVE ELECTRIC BORDER */
-/* ================================================= */
-
-.what-i-do::before {
-  content: '';
-
-  position: absolute;
-  inset: 0;
-
-  pointer-events: none;
-
-  opacity: 0;
-
-  background:
-    linear-gradient(
-      to right,
-      var(--color-accent),
-      var(--color-accent)
-    )
-    top left / 56px 1px no-repeat,
-
-    linear-gradient(
-      to bottom,
-      var(--color-accent),
-      var(--color-accent)
-    )
-    top left / 1px 56px no-repeat,
-
-    linear-gradient(
-      to left,
-      var(--color-accent),
-      var(--color-accent)
-    )
-    top right / 56px 1px no-repeat,
-
-    linear-gradient(
-      to bottom,
-      var(--color-accent),
-      var(--color-accent)
-    )
-    top right / 1px 56px no-repeat,
-
-    linear-gradient(
-      to right,
-      var(--color-accent),
-      var(--color-accent)
-    )
-    bottom left / 56px 1px no-repeat,
-
-    linear-gradient(
-      to top,
-      var(--color-accent),
-      var(--color-accent)
-    )
-    bottom left / 1px 56px no-repeat,
-
-    linear-gradient(
-      to left,
-      var(--color-accent),
-      var(--color-accent)
-    )
-    bottom right / 56px 1px no-repeat,
-
-    linear-gradient(
-      to top,
-      var(--color-accent),
-      var(--color-accent)
-    )
-    bottom right / 1px 56px no-repeat;
-
-  filter:
-    drop-shadow(
-      0 0 5px
-      rgba(216, 255, 62, 0.35)
+  height:
+    var(
+      --journey-scroll-height,
+      212vh
     );
 
-  z-index: 20;
+  min-height: 0;
 
-  transition: opacity 400ms ease;
+  display: block;
+
+  overflow: visible;
+
+  border-top:
+    1px solid
+    var(--color-border);
 }
 
-.what-i-do--active::before {
-  opacity: 0.7;
+
+/* ================================================= */
+/* STICKY STAGE */
+/* ================================================= */
+
+.what-i-do__stage {
+  position: sticky;
+
+  top: 0;
+
+  width: 100%;
+
+  height: 100vh;
+
+  display: grid;
+
+  grid-template-columns:
+    42% 58%;
+
+  overflow: hidden;
 }
 
 
@@ -113,14 +56,21 @@
 
   min-width: 0;
 
-  padding: 32px 40px;
+  padding:
+    32px
+    40px;
 
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
 
-  border-right: 1px solid var(--color-border);
+  border-right:
+    1px solid
+    var(--color-border);
 }
+
 
 /* ================================================= */
 /* CORE WRAP */
@@ -132,12 +82,117 @@
   left: 50%;
   top: 50%;
 
-  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  --core-glow: 0;
+
+  transition:
+    filter 180ms ease;
 }
+
+
+/* ================================================= */
+/* CORE AURA */
+/* ================================================= */
+
+.what-i-do__core-aura {
+  position: absolute;
+
+  inset: -80px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(
+        216,
+        255,
+        62,
+        calc(
+          0.16 *
+          var(--core-glow)
+        )
+      )
+      0%,
+
+      rgba(
+        216,
+        255,
+        62,
+        calc(
+          0.07 *
+          var(--core-glow)
+        )
+      )
+      28%,
+
+      rgba(
+        216,
+        255,
+        62,
+        0
+      )
+      68%
+    );
+
+  filter:
+    blur(12px);
+
+  opacity:
+    var(--core-glow);
+
+  transform:
+    scale(
+      calc(
+        0.86 +
+        var(--core-glow) * 0.14
+      )
+    );
+
+  transition:
+    opacity 180ms ease,
+    transform 300ms ease;
+}
+
 
 /* ================================================= */
 /* CORE */
 /* ================================================= */
+
+.what-i-do__core-button {
+  position: relative;
+
+  width: 190px;
+  height: 190px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+  color: inherit;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  z-index: 4;
+}
 
 .what-i-do__core {
   position: relative;
@@ -146,39 +201,26 @@
   height: 190px;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
 
   z-index: 4;
 
   transition:
-    filter 260ms ease,
-    transform 260ms ease;
+    filter 300ms ease,
+    transform 300ms ease;
 }
 
-/*
- * Connection from CORE to the JOURNEY axis.
- */
 
-.what-i-do__core::after {
-  content: '';
+/* ================================================= */
+/* CORE CONNECTION */
+/* ================================================= */
 
-  position: absolute;
 
-  top: 50%;
-  left: 100%;
 
-  width: 120px;
-  height: 1px;
-
-  background:
-    linear-gradient(
-      to right,
-      var(--color-border-strong),
-      transparent
-    );
-}
 
 /* ================================================= */
 /* CORE RINGS */
@@ -192,79 +234,197 @@
   pointer-events: none;
 }
 
+
+/* ================================================= */
+/* OUTER RING */
+/* ================================================= */
+
 .what-i-do__core-ring--outer {
   inset: -18px;
 
-  border: 1px dashed var(--color-border-strong);
+  border:
+    1px dashed
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        0.12 +
+        var(--core-glow) * 0.58
+      )
+    );
 
-  opacity: 0.63;
+  opacity:
+    calc(
+      0.45 +
+      var(--core-glow) * 0.55
+    );
+
+  box-shadow:
+    0 0
+    calc(
+      5px +
+      var(--core-glow) * 16px
+    )
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        var(--core-glow) * 0.18
+      )
+    );
 
   animation:
     what-i-do-core-spin
-    20s linear infinite;
+    24s linear infinite;
+
+  transition:
+    border-color 300ms ease,
+    opacity 300ms ease,
+    box-shadow 300ms ease;
 }
+
+
+/* ================================================= */
+/* MIDDLE RING */
+/* ================================================= */
+
+.what-i-do__core-ring--middle {
+  inset: 4px;
+
+  border:
+    1px solid
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        0.10 +
+        var(--core-glow) * 0.48
+      )
+    );
+
+  opacity:
+    calc(
+      0.35 +
+      var(--core-glow) * 0.65
+    );
+
+  box-shadow:
+    0 0
+    calc(
+      2px +
+      var(--core-glow) * 9px
+    )
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        var(--core-glow) * 0.16
+      )
+    );
+
+  transform:
+    rotate(-20deg);
+
+  transition:
+    opacity 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+
+/* ================================================= */
+/* INNER RING */
+/* ================================================= */
 
 .what-i-do__core-ring--inner {
   inset: 25px;
 
-  border: 1px solid
-    rgba(216, 255, 62, 0.13);
+  border:
+    1px solid
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        0.14 +
+        var(--core-glow) * 0.7
+      )
+    );
+
+  opacity:
+    calc(
+      0.35 +
+      var(--core-glow) * 0.65
+    );
+
+  box-shadow:
+    inset 0 0
+    calc(
+      3px +
+      var(--core-glow) * 10px
+    )
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        var(--core-glow) * 0.14
+      )
+    ),
+
+    0 0
+    calc(
+      3px +
+      var(--core-glow) * 12px
+    )
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        var(--core-glow) * 0.2
+      )
+    );
 
   animation:
     what-i-do-core-pulse
     3s ease-in-out infinite;
+
+  transition:
+    opacity 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
 }
 
-.what-i-do--active
-  .what-i-do__core {
+
+/* ================================================= */
+/* CORE ACTIVE LIGHT */
+/* ================================================= */
+
+.what-i-do__core-wrap {
   filter:
     drop-shadow(
-      0 0 14px
-        rgba(216, 255, 62, 0.28)
-    )
-    drop-shadow(
-      0 0 36px
-        rgba(216, 255, 62, 0.12)
+      0 0
+      calc(
+        5px +
+        var(--core-glow) * 22px
+      )
+      rgba(
+        216,
+        255,
+        62,
+        calc(
+          0.05 +
+          var(--core-glow) * 0.28
+        )
+      )
     );
 }
 
-.what-i-do--active
-  .what-i-do__core::after {
-  background:
-    linear-gradient(
-      to right,
-      rgba(216, 255, 62, 0.75),
-      transparent
-    );
-}
-
-.what-i-do--active
-  .what-i-do__core-ring--outer {
-  border-color:
-    rgba(216, 255, 62, 0.9);
-
-  box-shadow:
-    0 0 22px
-      rgba(216, 255, 62, 0.18);
-}
-
-.what-i-do--active
-  .what-i-do__core-ring--inner {
-  border-color:
-    rgba(216, 255, 62, 0.36);
-
-  box-shadow:
-    0 0 28px
-      rgba(216, 255, 62, 0.12);
-}
-
-.what-i-do--active
-  .what-i-do__core-status {
-  color: var(--color-text);
-  text-shadow:
-    0 0 12px
-      rgba(216, 255, 62, 0.4);
-}
 
 /* ================================================= */
 /* CORE TEXT */
@@ -275,37 +435,134 @@
 
   margin-bottom: 9px;
 
-  font-family: var(--font-mono);
+  font-family:
+    var(--font-mono);
+
   font-size: 8px;
+
   letter-spacing: 0.15em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
+
+  opacity:
+    calc(
+      0.55 +
+      var(--core-glow) * 0.45
+    );
 }
 
-.what-i-do__core-year {
+
+.what-i-do__core-current {
   position: relative;
 
-  font-family: var(--font-display);
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  min-width: 0;
+
+  text-align: center;
+}
+
+
+.what-i-do__core-year {
+  display: block;
+
+  font-family:
+    var(--font-display);
+
   font-size: 38px;
+
   font-weight: 600;
+
   line-height: 1;
 
   letter-spacing: -0.07em;
 
-  color: var(--color-text);
+  color:
+    var(--color-text);
+
+  text-shadow:
+    0 0
+    calc(
+      var(--core-glow) * 12px
+    )
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        var(--core-glow) * 0.5
+      )
+    );
+
+  animation:
+    core-current-in
+    420ms
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
 }
 
+
 .what-i-do__core-status {
-  position: relative;
+  display: block;
 
   margin-top: 12px;
 
-  font-family: var(--font-mono);
-  font-size: 7px;
-  letter-spacing: 0.16em;
+  max-width: 130px;
 
-  color: var(--color-accent);
+  font-family:
+    var(--font-mono);
+
+  font-size: 7px;
+
+  line-height: 1.4;
+
+  letter-spacing: 0.12em;
+
+  color:
+    var(--color-accent);
+
+  opacity:
+    calc(
+      0.55 +
+      var(--core-glow) * 0.45
+    );
+
+  text-shadow:
+    0 0
+    calc(
+      var(--core-glow) * 7px
+    )
+    rgba(
+      216,
+      255,
+      62,
+      calc(
+        var(--core-glow) * 0.4
+      )
+    );
+
+  animation:
+    core-current-in
+    420ms
+    80ms
+    both
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
 }
+
 
 /* ================================================= */
 /* CORE META */
@@ -313,17 +570,83 @@
 
 .what-i-do__core-meta {
   display: flex;
+
   justify-content: space-between;
 
-  font-family: var(--font-mono);
+  font-family:
+    var(--font-mono);
+
   font-size: 8px;
+
   letter-spacing: 0.1em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
 }
 
+
 /* ================================================= */
-/* JOURNEY SIDE */
+/* LEARNED */
+/* ================================================= */
+
+.what-i-do__learned {
+  position: relative;
+
+  max-width: 100%;
+
+  margin-top: 14px;
+  padding-top: 14px;
+
+  border-top:
+    1px solid
+    var(--color-border);
+
+  animation:
+    what-i-do-learned-in
+    280ms
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+.what-i-do__learned-label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-family:
+    var(--font-mono);
+
+  font-size: 18px;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  color:
+    var(--color-text-muted);
+}
+
+.what-i-do__learned-text {
+  margin: 0;
+
+  font-family:
+    var(--font-body);
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  color:
+    var(--color-text-secondary);
+}
+
+
+/* ================================================= */
+/* JOURNEY */
 /* ================================================= */
 
 .what-i-do__journey {
@@ -333,8 +656,10 @@
   min-height: 0;
 
   display: flex;
+
   flex-direction: column;
 }
+
 
 /* ================================================= */
 /* JOURNEY HEADER */
@@ -345,19 +670,28 @@
 
   height: 73px;
 
-  padding: 32px 40px 0;
+  padding:
+    32px
+    40px
+    0;
 
   display: flex;
+
   justify-content: space-between;
 
-  font-family: var(--font-mono);
+  font-family:
+    var(--font-mono);
+
   font-size: 8px;
+
   letter-spacing: 0.12em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
 
   z-index: 10;
 }
+
 
 /* ================================================= */
 /* VIEWPORT */
@@ -373,6 +707,7 @@
   overflow: hidden;
 }
 
+
 /* ================================================= */
 /* AXIS */
 /* ================================================= */
@@ -386,19 +721,24 @@
 
   width: 1px;
 
-  transform: none;
-
   background:
     linear-gradient(
       to bottom,
+
       transparent,
-      var(--color-border-strong) 12%,
-      var(--color-border-strong) 88%,
+
+      var(--color-border-strong)
+      12%,
+
+      var(--color-border-strong)
+      88%,
+
       transparent
     );
 
   z-index: 1;
 }
+
 
 .journey__axis::before,
 .journey__axis::after {
@@ -415,18 +755,24 @@
     translateX(-50%)
     rotate(45deg);
 
-  border: 1px solid var(--color-border-strong);
+  border:
+    1px solid
+    var(--color-border-strong);
 
-  background: var(--color-bg);
+  background:
+    var(--color-bg);
 }
+
 
 .journey__axis::before {
   top: 12%;
 }
 
+
 .journey__axis::after {
   bottom: 12%;
 }
+
 
 /* ================================================= */
 /* TRACK */
@@ -438,17 +784,17 @@
   inset: 0;
 
   display: flex;
+
   flex-direction: column;
 
   padding-top: 14vh;
   padding-bottom: 14vh;
 
-  transition:
-    transform 300ms
-    cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 
   z-index: 3;
 }
+
 
 /* ================================================= */
 /* ITEM */
@@ -457,24 +803,27 @@
 .journey__item {
   position: relative;
 
-  flex: 0 0 18vh;
+  flex: 0 0 14vh;
 
   min-height: 120px;
 
-  opacity: 0.16;
+  opacity: 0.15;
 
   transition:
-    opacity 300ms ease,
-    transform 300ms ease;
+    opacity 280ms ease,
+    transform 280ms ease;
 }
+
 
 .journey__item--active {
   opacity: 1;
 }
 
+
 .journey__item--far {
-  opacity: 0.06;
+  opacity: 0.045;
 }
+
 
 /* ================================================= */
 /* NODE */
@@ -490,12 +839,18 @@
   height: 11px;
 
   transform:
-    translate(-50%, -50%)
+    translate(
+      -50%,
+      -50%
+    )
     rotate(45deg);
 
-  border: 1px solid var(--color-border-strong);
+  border:
+    1px solid
+    var(--color-border-strong);
 
-  background: var(--color-bg);
+  background:
+    var(--color-bg);
 
   z-index: 5;
 
@@ -504,6 +859,7 @@
     border-color 300ms ease,
     box-shadow 300ms ease;
 }
+
 
 .journey__node span {
   position: absolute;
@@ -514,28 +870,51 @@
   width: 3px;
   height: 3px;
 
-  transform: translate(-50%, -50%);
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
 
-  background: var(--color-text-muted);
+  background:
+    var(--color-text-muted);
 }
 
-.journey__item--active .journey__node {
-  border-color: var(--color-accent);
 
-  background: var(--color-accent);
+.journey__item--active
+  .journey__node {
+  border-color:
+    var(--color-accent);
+
+  background:
+    var(--color-accent);
 
   box-shadow:
     0 0 0 5px
-      rgba(216, 255, 62, 0.045),
+      rgba(
+        216,
+        255,
+        62,
+        0.045
+      ),
+
     0 0 24px
-      rgba(216, 255, 62, 0.18);
+      rgba(
+        216,
+        255,
+        62,
+        0.18
+      );
 }
+
 
 .journey__item--active
   .journey__node
   span {
-  background: var(--color-bg);
+  background:
+    var(--color-bg);
 }
+
 
 /* ================================================= */
 /* ITEM CONTENT */
@@ -551,30 +930,38 @@
 
   width: auto;
 
-  padding: 16px 18px;
+  padding:
+    16px
+    18px;
 
-  transform: translateY(-50%);
+  transform:
+    translateY(-50%);
 
-  border: 1px solid var(--color-border);
-
-  /*
-   * Keep the background only on the timeline card.
-   * This allows SpaceBackground to remain visible
-   * everywhere else in the section.
-   */
+  border:
+    1px solid
+    var(--color-border);
 
   background:
-    rgba(7, 9, 18, 0.78);
+    rgba(
+      7,
+      9,
+      18,
+      0.78
+    );
 
-  backdrop-filter: blur(10px);
+  backdrop-filter:
+    blur(10px);
 
   transition:
-    border-color 300ms ease,
-    transform 300ms ease;
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    padding 280ms ease,
+    transform 280ms ease;
 }
 
+
 /* ================================================= */
-/* CONNECTION LINE */
+/* CONNECTION */
 /* ================================================= */
 
 .journey__item-content::before {
@@ -588,33 +975,53 @@
   width: 38px;
   height: 1px;
 
-  background: var(--color-border);
+  background:
+    var(--color-border);
 
   transition:
-    background 300ms ease,
-    width 300ms ease;
+    background 280ms ease;
 }
+
 
 .journey__item--active
   .journey__item-content {
-  border-color: var(--color-accent);
+  border-color:
+    var(--color-accent);
+
+  padding:
+    18px
+    20px;
 
   box-shadow:
     0 0 0 1px
-      rgba(216, 255, 62, 0.08),
+      rgba(
+        216,
+        255,
+        62,
+        0.08
+      ),
+
     0 0 24px
-      rgba(216, 255, 62, 0.1);
+      rgba(
+        216,
+        255,
+        62,
+        0.08
+      );
 
   transform:
     translateY(-50%)
     translateX(3px)
-    scale(1.050);
+    scale(1.02);
 }
+
 
 .journey__item--active
   .journey__item-content::before {
-  background: var(--color-accent);
+  background:
+    var(--color-accent);
 }
+
 
 /* ================================================= */
 /* TEXT */
@@ -625,37 +1032,146 @@
 
   margin-bottom: 8px;
 
-  font-family: var(--font-mono);
+  font-family:
+    var(--font-mono);
+
   font-size: 9px;
+
   letter-spacing: 0.12em;
 
-  color: var(--color-accent);
+  color:
+    var(--color-accent);
 }
 
-.journey__item-content h3 {
-  margin: 0 0 9px;
 
-  font-family: var(--font-display);
+.journey__item-content h3 {
+  margin:
+    0 0 9px;
+
+  font-family:
+    var(--font-display);
+
   font-size: 16px;
+
   font-weight: 600;
+
   line-height: 1.1;
 
   letter-spacing: -0.025em;
 
-  color: var(--color-text);
+  color:
+    var(--color-text);
 }
+
 
 .journey__item-content p {
   margin: 0;
 
   max-width: 300px;
 
-  font-family: var(--font-body);
+  font-family:
+    var(--font-body);
+
   font-size: 11px;
+
   line-height: 1.65;
 
-  color: var(--color-text-secondary);
+  color:
+    var(--color-text-secondary);
 }
+
+
+.journey__item--active
+  .journey__item-content
+  h3 {
+  font-size: 17px;
+}
+
+
+/* ================================================= */
+/* ENDING */
+/* ================================================= */
+
+.journey__ending {
+  position: relative;
+
+  flex: 0 0 14vh;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding-left: 38px;
+
+  opacity: 0.25;
+
+  transition:
+    opacity 400ms ease;
+}
+
+
+.journey__ending-symbol {
+  font-family:
+    var(--font-display);
+
+  font-size: 28px;
+
+  line-height: 1;
+
+  color:
+    var(--color-text-muted);
+
+  transition:
+    color 400ms ease,
+    text-shadow 400ms ease;
+}
+
+
+.journey__ending-label {
+  font-family:
+    var(--font-mono);
+
+  font-size: 8px;
+
+  letter-spacing: 0.12em;
+
+  color:
+    var(--color-text-muted);
+
+  transition:
+    color 400ms ease;
+}
+
+
+.journey__ending--active {
+  opacity: 1;
+}
+
+
+.journey__ending--active
+  .journey__ending-symbol {
+  color:
+    var(--color-accent);
+
+  text-shadow:
+    0 0 16px
+    rgba(
+      216,
+      255,
+      62,
+      0.3
+    );
+}
+
+
+.journey__ending--active
+  .journey__ending-label {
+  color:
+    var(--color-accent);
+}
+
 
 /* ================================================= */
 /* PROGRESS */
@@ -668,20 +1184,29 @@
   top: 50%;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   gap: 9px;
 
-  transform: translateY(-50%);
+  transform:
+    translateY(-50%);
 
-  font-family: var(--font-mono);
+  font-family:
+    var(--font-mono);
+
   font-size: 8px;
+
   letter-spacing: 0.08em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
 
   z-index: 10;
 }
+
 
 .journey__progress-line {
   position: relative;
@@ -691,8 +1216,10 @@
 
   overflow: hidden;
 
-  background: var(--color-border);
+  background:
+    var(--color-border);
 }
+
 
 .journey__progress-line span {
   position: absolute;
@@ -703,290 +1230,484 @@
   width: 100%;
   height: 100%;
 
-  transform-origin: bottom;
+  transform-origin:
+    bottom;
 
-  background: var(--color-accent);
+  background:
+    var(--color-accent);
 
   transition:
-    transform 300ms
-    cubic-bezier(0.22, 1, 0.36, 1);
+    transform 250ms
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
 }
 
 
-.what-i-do__core-current {
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  min-width: 0;
-  text-align: center;
-}
-
-.what-i-do__core-year {
-  display: block;
-
-  font-family: var(--font-display);
-  font-size: 38px;
-  font-weight: 600;
-  line-height: 1;
-
-  letter-spacing: -0.07em;
-
-  color: var(--color-text);
-
-  animation:
-    core-current-in
-    420ms
-    cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.what-i-do__core-status {
-  display: block;
-
-  margin-top: 12px;
-
-  max-width: 130px;
-
-  font-family: var(--font-mono);
-  font-size: 7px;
-  line-height: 1.4;
-  letter-spacing: 0.12em;
-
-  color: var(--color-accent);
-
-  animation:
-    core-current-in
-    420ms
-    80ms
-    both
-    cubic-bezier(0.22, 1, 0.36, 1);
-}
+/* ================================================= */
+/* ANIMATIONS */
+/* ================================================= */
 
 @keyframes core-current-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+
+    transform:
+      translateY(10px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+
+    transform:
+      translateY(0);
   }
 }
 
 
-/* ================================================= */
-/* CORE ANIMATION */
-/* ================================================= */
+@keyframes what-i-do-learned-in {
+  from {
+    opacity: 0;
+    transform:
+      translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
 
 @keyframes what-i-do-core-spin {
   to {
-    transform: rotate(360deg);
+    transform:
+      rotate(360deg);
   }
 }
+
 
 @keyframes what-i-do-core-pulse {
   0%,
   100% {
-    opacity: 0.35;
-    transform: scale(1);
+    opacity: 0.3;
+
+    transform:
+      scale(1);
   }
 
   50% {
-    opacity: 0.85;
-    transform: scale(1.06);
+    opacity: 0.8;
+
+    transform:
+      scale(1.06);
   }
 }
+
 
 /* ================================================= */
 /* MOBILE */
 /* ================================================= */
 
 @media (max-width: 768px) {
-  .what-i-do {
-    height: 100svh;
-    min-height: 620px;
 
-    grid-template-columns: 36% 64%;
+  .what-i-do {
+    width: 100%;
+
+    height: auto;
+
+    min-height: 0;
+
+    overflow: visible;
   }
 
-  /* ================================================= */
+
+  /* =============================================== */
+  /* STAGE */
+  /* =============================================== */
+
+  .what-i-do__stage {
+    position: relative;
+
+    top: auto;
+
+    width: 100%;
+
+    height: auto;
+
+    min-height: 0;
+
+    display: block;
+
+    overflow: visible;
+  }
+
+
+  /* =============================================== */
   /* CORE SIDE */
-  /* ================================================= */
+  /* =============================================== */
 
   .what-i-do__core-side {
-    padding: 24px 18px;
+    position: relative;
+
+    width: 100%;
+
+    padding:
+      72px
+      18px
+      56px;
+
+    display: none;
+
+    border-right: none;
+
+    border-bottom:
+      1px solid
+      var(--color-border);
   }
+
 
   .what-i-do__core-wrap {
-    left: 50%;
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    width: 100%;
+    height: 150px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transform: none;
+
+    filter: none;
+
+    --core-glow: 0;
   }
+
 
   .what-i-do__core {
-    width: 105px;
-    height: 105px;
+    width: 120px;
+    height: 120px;
   }
+
+
+  .what-i-do__core-aura {
+    inset: -40px;
+
+    opacity: 0.18;
+  }
+
 
   .what-i-do__core::after {
-    left: 100%;
-    right: auto;
-
-    width: 80px;
+    display: none;
   }
+
 
   .what-i-do__core-ring--outer {
-    inset: -10px;
+    inset: -11px;
+
+    animation-duration: 28s;
   }
 
-  .what-i-do__core-ring--inner {
-    inset: 15px;
+
+  .what-i-do__core-ring--middle {
+    inset: 3px;
   }
+
+
+  .what-i-do__core-ring--inner {
+    inset: 17px;
+
+    animation-duration: 4s;
+  }
+
 
   .what-i-do__core-caption {
     font-size: 6px;
   }
 
+
   .what-i-do__core-year {
-    font-size: 24px;
+    font-size: 28px;
   }
+
 
   .what-i-do__core-status {
-    margin-top: 7px;
+    max-width: 150px;
 
-    font-size: 5px;
+    margin-top: 8px;
+
+    font-size: 6px;
   }
+
 
   .what-i-do__core-meta {
     display: none;
   }
 
-  /* ================================================= */
-  /* JOURNEY HEADER */
-  /* ================================================= */
+
+  /* =============================================== */
+  /* JOURNEY */
+  /* =============================================== */
+
+  .what-i-do__journey {
+    width: 100%;
+
+    display: block;
+  }
+
 
   .journey__header {
-    height: 58px;
+    height: auto;
 
     padding:
       24px
-      18px
-      0;
+      18px;
 
     font-size: 6px;
   }
 
-  /* ================================================= */
+
+  .journey__viewport {
+    height: auto;
+
+    overflow: visible;
+  }
+
+
+  /* =============================================== */
   /* AXIS */
-  /* ================================================= */
+  /* =============================================== */
 
   .journey__axis {
-    left: 0;
+    left: 22px;
+
+    background:
+      linear-gradient(
+        to bottom,
+        transparent,
+        var(--color-border-strong) 4%,
+        var(--color-border-strong) 96%,
+        transparent
+      );
   }
 
-  /* ================================================= */
+
+  .journey__axis::before,
+  .journey__axis::after {
+    display: none;
+  }
+
+
+  /* =============================================== */
   /* TRACK */
-  /* ================================================= */
+  /* =============================================== */
+
+  .journey__track {
+    position: relative;
+
+    inset: auto;
+
+    width: 100%;
+
+    display: block;
+
+    padding:
+      12px
+      18px
+      80px;
+
+    transform: none !important;
+
+    transition: none;
+  }
+
+
+  /* =============================================== */
+  /* ITEM */
+  /* =============================================== */
 
   .journey__item {
-    flex-basis: 15vh;
+    position: relative;
+
+    width: 100%;
+
+    min-height: 0;
+
+    padding:
+      0
+      0
+      28px
+      26px;
+
+    opacity: 1;
+
+    display: block;
+
+    flex: none;
   }
 
-  /* ================================================= */
+
+  .journey__item--far {
+    opacity: 1;
+  }
+
+
+  /* =============================================== */
   /* NODE */
-  /* ================================================= */
+  /* =============================================== */
 
   .journey__node {
-    left: 0;
+    left: 4px;
+    top: 22px;
 
     width: 8px;
     height: 8px;
   }
 
-  /* ================================================= */
+
+  /* =============================================== */
   /* CONTENT */
-  /* ================================================= */
+  /* =============================================== */
 
   .journey__item-content {
-    left: 22px;
-    right: 18px;
+    position: relative;
 
-    width: auto;
+    top: auto;
+    left: auto;
+    right: auto;
 
-    padding: 10px 11px;
+    width: 100%;
+
+    padding:
+      14px
+      13px;
+
+    transform: none !important;
+
+    background:
+      rgba(
+        7,
+        9,
+        18,
+        0.72
+      );
+
+    backdrop-filter:
+      blur(8px);
+
+    transition: none;
   }
+
 
   .journey__item-content::before {
-    left: -22px;
+    top: 22px;
 
-    width: 22px;
+    left: -26px;
+
+    width: 26px;
   }
 
-  .journey__item-content h3 {
-    font-size: 10px;
+
+  .journey__item--active
+    .journey__item-content {
+    padding:
+      14px
+      13px;
+
+    transform: none !important;
   }
 
-  .journey__item-content p {
-    font-size: 8px;
-    line-height: 1.5;
-  }
+
+  /* =============================================== */
+  /* TEXT */
+  /* =============================================== */
 
   .journey__year {
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 
     font-size: 7px;
   }
 
-  /* ================================================= */
+
+  .journey__item-content h3 {
+    margin-bottom: 8px;
+
+    font-size: 12px;
+  }
+
+
+  .journey__item-content p {
+    max-width: none;
+
+    font-size: 9px;
+
+    line-height: 1.6;
+  }
+
+
+  /* =============================================== */
+  /* END */
+  /* =============================================== */
+
+  .journey__ending {
+    min-height: 90px;
+
+    padding:
+      20px
+      0
+      20px
+      26px;
+
+    align-items: flex-start;
+
+    opacity: 1;
+  }
+
+
+  .journey__ending-symbol {
+    font-size: 20px;
+  }
+
+
+  .journey__ending-label {
+    font-size: 7px;
+  }
+
+
+  /* =============================================== */
   /* PROGRESS */
-  /* ================================================= */
+  /* =============================================== */
 
   .journey__progress {
-    right: 9px;
-  }
-
-  .journey__progress-line {
-    height: 70px;
-  }
-
-  /* ================================================= */
-  /* ACTIVE BORDER */
-  /* ================================================= */
-
-  .what-i-do--active::before {
-    animation-duration: 4.8s;
+    display: none;
   }
 }
+
 
 /* ================================================= */
 /* REDUCED MOTION */
 /* ================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .what-i-do__core-ring {
     animation: none;
   }
 
-  .journey__track {
-    transition: none;
-  }
-
+  .journey__item-content,
+  .journey__ending,
+  .journey__ending-label,
+  .journey__ending-symbol,
   .journey__progress-line span {
     transition: none;
   }
-
-  .what-i-do--active::before {
-    animation: none;
-  }
-
-
-  
-
-
-
-/* 
- */
-
- 
 }
